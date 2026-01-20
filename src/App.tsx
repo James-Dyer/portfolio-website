@@ -58,7 +58,7 @@ export default function App() {
       {/* Main layout */}
       <div className="relative z-10 min-h-screen flex flex-col lg:flex-row">
         {/* Left side - Identity Card */}
-        <div className="lg:w-[45%] xl:w-[40%] flex items-start justify-center p-8 lg:p-16 pt-8 lg:pt-12 pb-12">
+        <div className="lg:w-[40%] xl:w-[35%] flex items-start justify-center px-4 lg:px-8 xl:px-10 py-8 lg:py-12 pb-12">
           <div
             className={`card-glow bg-card rounded-2xl p-8 lg:p-12 w-full max-w-md ${mounted ? 'animate-scale-in delay-200' : 'opacity-0'
               }`}
@@ -82,26 +82,6 @@ export default function App() {
               James Dyer
             </h2>
 
-            {/* Role badge */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="accent-line" />
-              <span className="text-gold text-sm font-body font-medium tracking-widest uppercase">
-                Software Engineer
-              </span>
-            </div>
-
-            {/* Quick stats */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="border-l border-line pl-4">
-                <div className="text-stone text-xs font-body uppercase tracking-wider mb-1">Location</div>
-                <div className="text-cream text-sm font-body">California</div>
-              </div>
-              <div className="border-l border-line pl-4">
-                <div className="text-stone text-xs font-body uppercase tracking-wider mb-1">Focus</div>
-                <div className="text-cream text-sm font-body">Full Stack</div>
-              </div>
-            </div>
-
             {/* Social links */}
             <div className="flex gap-6">
               {socialLinks.map((link) => (
@@ -120,7 +100,7 @@ export default function App() {
         </div>
 
         {/* Right side - Hero Content */}
-        <div className="lg:w-[55%] xl:w-[60%] flex flex-col justify-start p-8 lg:p-16 xl:p-24 pt-0 lg:pt-1 pb-10">
+        <div className="lg:w-[60%] xl:w-[65%] flex flex-col justify-start px-4 lg:px-8 xl:px-10 pt-12 lg:pt-16 pb-10">
           {/* Top nav area */}
           <nav
             className={`mb-4 pt-0 flex justify-end ${mounted ? 'animate-fade delay-300' : 'opacity-0'
