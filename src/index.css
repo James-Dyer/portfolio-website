@@ -13,6 +13,7 @@
 @theme {
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body: "Outfit", system-ui, sans-serif;
+  --font-sans: "Sora", system-ui, sans-serif;
 
   --color-ink: #0c0c0c;
   --color-card: #161616;
@@ -211,4 +212,36 @@ a {
   width: 60px;
   height: 1px;
   background: linear-gradient(90deg, var(--color-gold), transparent);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  width: 20px;
+  height: 32px;
+  border: 1px solid rgba(138, 138, 138, 0.4);
+  border-radius: 10px;
+  position: relative;
+}
+
+.scroll-indicator-dot {
+  width: 3px;
+  height: 6px;
+  background-color: var(--color-gold);
+  border-radius: 2px;
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  transform: translateX(-50%);
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    top: 6px;
+    opacity: 1;
+  }
+  50% {
+    top: 18px;
+    opacity: 0.4;
+  }
 }

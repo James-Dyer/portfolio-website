@@ -1,20 +1,6 @@
 import { useEffect, useState } from 'react'
 import MagneticShapes from './components/MagneticShapes'
-
-const socialLinks = [
-  {
-    label: 'GitHub',
-    href: 'https://github.com/James-Dyer',
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://linkedin.com/in/jamesthedyer',
-  },
-  {
-    label: 'Email',
-    href: 'mailto:james.dyer.dyer@gmail.com',
-  },
-]
+import Projects from './components/Projects'
 
 export default function App() {
   const [mounted, setMounted] = useState(false)
@@ -24,7 +10,7 @@ export default function App() {
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-ink overflow-hidden">
+    <div className="relative bg-ink">
       {/* Noise texture */}
       <div className="noise-overlay" />
 
@@ -55,23 +41,27 @@ export default function App() {
         />
       </div>
 
-      {/* Main layout */}
-      <div className="relative z-10 min-h-screen flex flex-col lg:flex-row">
-        {/* Left side - Identity Card */}
-        <div className="lg:w-[40%] xl:w-[35%] flex items-start justify-center px-4 lg:px-8 xl:px-10 py-8 lg:py-12 pb-12">
+      {/* Main Layout */}
+      <div className="relative z-10 flex flex-col lg:flex-row lg:pl-16 xl:pl-28">
+        {/* Left side - Identity Card (sticky) */}
+        <div className="lg:w-[40%] xl:w-[35%] lg:sticky lg:top-0 lg:h-screen flex items-start justify-center px-4 lg:px-8 xl:px-10 py-8 lg:py-12 pb-12">
           <div
-            className={`card-glow bg-card rounded-2xl p-8 lg:p-12 w-full max-w-md ${mounted ? 'animate-scale-in delay-200' : 'opacity-0'
+            className={`card-glow bg-card rounded-2xl p-8 pb-20 lg:p-12 lg:pb-24 w-full max-w-md relative ${mounted ? 'animate-scale-in delay-200' : 'opacity-0'
               }`}
           >
-            {/* Portrait placeholder */}
+            {/* Portrait */}
             <div className="relative mb-8">
               <div className="aspect-[4/5] bg-ink rounded-xl overflow-hidden border border-line">
-                {/* Placeholder portrait - stylized initials */}
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-card to-ink">
-                  <span className="font-display text-[120px] lg:text-[140px] text-cream/10 font-medium select-none">
-                    JD
-                  </span>
-                </div>
+                <picture>
+                  <source srcSet="/IMG_6767_480.avif" type="image/avif" />
+                  <img
+                    src="/IMG_6767.jpg"
+                    alt="Portrait of James Dyer"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
               {/* Decorative accent */}
               <div className="absolute -bottom-3 -right-3 w-24 h-24 border border-gold/30 rounded-xl" />
@@ -82,59 +72,84 @@ export default function App() {
               James Dyer
             </h2>
 
-            {/* Social links */}
-            <div className="flex gap-6">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith('mailto') ? undefined : '_blank'}
-                  rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                  className="link-hover text-stone hover:text-gold text-sm font-body transition-colors duration-300"
-                >
-                  {link.label}
-                </a>
-              ))}
+            {/* Social icons pinned to bottom */}
+            <div className="absolute inset-x-0 bottom-6 lg:bottom-8 flex justify-center gap-8">
+              <a
+                href="https://github.com/James-Dyer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-stone hover:text-gold transition-colors duration-300"
+                aria-label="GitHub"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
+                  <path fillRule="evenodd" d="M12 2a10 10 0 0 0-3.162 19.492c.5.092.682-.218.682-.484 0-.237-.009-.868-.014-1.703-2.775.603-3.36-1.337-3.36-1.337-.454-1.152-1.11-1.46-1.11-1.46-.907-.62.069-.607.069-.607 1.003.07 1.53 1.03 1.53 1.03.892 1.528 2.341 1.087 2.91.832.092-.647.35-1.087.637-1.338-2.216-.252-4.547-1.108-4.547-4.934 0-1.09.39-1.983 1.029-2.681-.103-.253-.446-1.27.098-2.646 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844a9.56 9.56 0 0 1 2.504.337c1.909-1.294 2.748-1.025 2.748-1.025.546 1.376.202 2.393.1 2.646.64.698 1.028 1.59 1.028 2.68 0 3.836-2.335 4.678-4.558 4.925.359.31.679.921.679 1.856 0 1.339-.012 2.419-.012 2.749 0 .268.18.58.688.482A10 10 0 0 0 12 2Z" clipRule="evenodd" />
+                </svg>
+              </a>
+              <a
+                href="https://linkedin.com/in/jamesthedyer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-stone hover:text-gold transition-colors duration-300"
+                aria-label="LinkedIn"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
+                  <path d="M20.452 20.452h-3.555v-5.569c0-1.328-.027-3.036-1.85-3.036-1.851 0-2.135 1.445-2.135 2.939v5.666H9.357V9h3.413v1.561h.049c.476-.9 1.637-1.85 3.369-1.85 3.604 0 4.27 2.372 4.27 5.455v6.286ZM5.337 7.433a2.064 2.064 0 1 1 .001-4.128 2.064 2.064 0 0 1-.001 4.128Zm1.779 13.019H3.556V9h3.56v11.452Z" />
+                </svg>
+              </a>
+              <a
+                href="mailto:james.dyer.dyer@gmail.com"
+                className="text-stone hover:text-gold transition-colors duration-300"
+                aria-label="Email"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
+                  <path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25Zm2.75-1.25a1.25 1.25 0 0 0-1.25 1.25v.394l7.084 3.798a.75.75 0 0 0 .732 0L19.4 7.144v-.394a1.25 1.25 0 0 0-1.25-1.25Zm13 3.178-5.932 3.183a2.25 2.25 0 0 1-2.136 0L4.75 8.678v8.572a1.25 1.25 0 0 0 1.25 1.25h12.5a1.25 1.25 0 0 0 1.25-1.25Z" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Right side - Hero Content */}
-        <div className="lg:w-[60%] xl:w-[65%] flex flex-col justify-start px-4 lg:px-8 xl:px-10 pt-12 lg:pt-16 pb-10">
-          {/* Top nav area */}
-          <nav
-            className={`mb-4 pt-0 flex justify-end ${mounted ? 'animate-fade delay-300' : 'opacity-0'
-              }`}
-          >
-            <a
-              href="mailto:james.dyer.dyer@gmail.com"
-              className="group flex items-center gap-2 text-stone hover:text-cream text-sm font-body transition-colors duration-300"
-            >
-            </a>
-          </nav>
-
-          {/* Main headline */}
-          <div className="mt-0">
-            <h1
-              className={`font-display text-cream leading-[0.85] tracking-tight mb-10 ${mounted ? 'animate-slide-up delay-400' : 'opacity-0'
+        {/* Right side - Scrollable Content */}
+        <div className="lg:w-[60%] xl:w-[65%] flex flex-col">
+          {/* Hero Section */}
+          <div className="min-h-screen flex flex-col justify-start px-4 lg:px-8 xl:px-10 pt-12 lg:pt-16 pb-10">
+            {/* Top nav area */}
+            <nav
+              className={`mb-4 pt-0 flex justify-end ${mounted ? 'animate-fade delay-300' : 'opacity-0'
                 }`}
             >
-              <span className="block text-[clamp(4rem,9vw,8.5rem)] font-medium">
-                Software <br className="hidden sm:block" /> <span className="italic text-gold">Engineer</span>
-              </span>
-            </h1>
+              <a
+                href="mailto:james.dyer.dyer@gmail.com"
+                className="group flex items-center gap-2 text-stone hover:text-cream text-sm font-body transition-colors duration-300"
+              >
+              </a>
+            </nav>
 
-            <p
-              className={`font-body text-stone text-lg lg:text-xl max-w-xl leading-relaxed mb-12 ${mounted ? 'animate-slide-up delay-500' : 'opacity-0'
-                }`}
-            >
-              Crafting elegant solutions at the intersection of{' '}
-              <span className="text-cream">systems programming</span>,{' '}
-              <span className="text-cream">cloud infrastructure</span>, and{' '}
-              <span className="text-cream">full-stack development</span>.
-            </p>
+            {/* Main headline */}
+            <div className="mt-0">
+              <h1
+                className={`font-display text-cream leading-[0.85] tracking-tight mb-10 ${mounted ? 'animate-slide-up delay-400' : 'opacity-0'
+                  }`}
+              >
+                <span className="block text-[clamp(4rem,9vw,8.5rem)] font-medium">
+                  Software <br className="hidden sm:block" /> <span className="italic text-gold">Engineer</span>
+                </span>
+              </h1>
 
+              <p
+                className={`font-body text-stone text-lg lg:text-xl max-w-xl leading-relaxed ${mounted ? 'animate-slide-up delay-500' : 'opacity-0'
+                  }`}
+              >
+                Crafting elegant solutions at the intersection of{' '}
+                <span className="text-cream">systems programming</span>,{' '}
+                <span className="text-cream">cloud infrastructure</span>, and{' '}
+                <span className="text-cream">full-stack development</span>.
+              </p>
+            </div>
           </div>
+
+          {/* Projects Section */}
+          <Projects mounted={mounted} />
         </div>
       </div>
     </div>
