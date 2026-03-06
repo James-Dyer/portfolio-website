@@ -55,6 +55,5 @@ Update `src/App.tsx` srcSet and src references accordingly.
 
 ## Tooling Notes
 
-- **Edit tool**: Has a recurring `replace_all` type error — use `Write` to rewrite the full file when Edit fails repeatedly
 - **Visual testing**: Playwright MCP is available; screenshots save to `.playwright-mcp/` (gitignored). Start dev server first with `npm run dev`.
 - **Committing**: Use the `/commit-push` skill (global, available in all projects)
