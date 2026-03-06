@@ -77,9 +77,9 @@ export default function App() {
             <div className="relative mb-8">
               <div className="aspect-[4/5] bg-ink rounded-xl overflow-hidden">
                 <picture>
-                  <source srcSet="/IMG_6767_480.avif" type="image/avif" />
+                  <source srcSet="/DSC03663_480.avif" type="image/avif" />
                   <img
-                    src="/IMG_6767.jpg"
+                    src="/DSC03663.JPG"
                     alt="Portrait of James Dyer"
                     className="w-full h-full object-cover"
                     loading="lazy"
