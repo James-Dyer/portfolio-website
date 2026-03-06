@@ -4,6 +4,7 @@ import MagneticShapes from './components/MagneticShapes'
 import Projects from './components/Projects'
 import Experience from './components/Experience'
 import ProjectsPage from './pages/ProjectsPage'
+import ExperiencePage from './pages/ExperiencePage'
 
 function HomePage() {
   const [mounted, setMounted] = useState(false)
@@ -199,6 +200,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/projects" element={<ProjectsPage />} />
+      <Route path="/experience" element={<ExperiencePage />} />
     </Routes>
   )
 }

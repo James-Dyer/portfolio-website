@@ -2,18 +2,21 @@ import ExperienceCard from './ExperienceCard'
 
 const experiences = [
   {
+    id: 'gallo',
     company: 'E. & J. Gallo Winery',
     role: 'Capstone Team Lead',
     date: 'Aug 2025 – Dec 2025',
     location: 'Modesto, CA',
   },
   {
+    id: 'mimic',
     company: 'Mimic Ransomware Defense',
     role: 'Software Engineering Intern',
     date: 'May 2025 – Aug 2025',
     location: 'Remote',
   },
   {
+    id: 'sigmachi',
     company: 'Sigma Chi Fraternity',
     role: 'Website Chairman',
     date: 'Dec 2024 – Jun 2025',
@@ -47,6 +50,7 @@ export default function Experience({ mounted }: ExperienceProps) {
             date={exp.date}
             location={exp.location}
             index={index}
+            link={`/experience#${exp.id}`}
           />
         ))}
       </div>
