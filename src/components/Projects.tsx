@@ -2,22 +2,22 @@ import ProjectCard from './ProjectCard'
 
 const projects = [
   {
+    id: 'macrotracker',
+    title: 'macroTracker',
+    subtitle: 'Full-stack nutrition tracking PWA — logs meals from a single photo using computer vision and LLM analysis',
+    techStack: 'React / TypeScript / Supabase / Gemini API / OpenAI',
+  },
+  {
+    id: 'ai-tutor',
     title: 'AI-Assisted Software Engineering Tutor',
-    subtitle: 'LLM-powered software tutoring platform',
+    subtitle: 'LLM workflow that turns assignment prompts into learning goals, structured plans, and stepwise guidance — without revealing solutions',
     techStack: 'React / Flask / PostgreSQL',
-    link: '#',
   },
   {
-    title: 'L-Game with Optimal Agent',
-    subtitle: 'Optimal agent for L-Game',
+    id: 'lgame',
+    title: 'L-Game with Optimal Game-Playing Agent',
+    subtitle: "Reimplementation of Edward de Bono's L-Game with a deterministic agent that selects optimal moves via state evaluation and search",
     techStack: 'Python',
-    link: '#',
-  },
-  {
-    title: 'Course Requirement Optimizer',
-    subtitle: 'Course requirement optimizer algorithm',
-    techStack: 'C++',
-    link: '#',
   },
 ]
 
@@ -41,11 +41,11 @@ export default function Projects({ mounted }: ProjectsProps) {
       <div className="space-y-1.5 lg:space-y-2">
         {projects.map((project, index) => (
           <ProjectCard
-            key={project.title}
+            key={project.id}
             title={project.title}
             subtitle={project.subtitle}
             techStack={project.techStack}
-            link={project.link}
+            link={`/projects#${project.id}`}
             index={index}
           />
         ))}

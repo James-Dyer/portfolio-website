@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 
 interface ProjectCardProps {
   title: string
@@ -35,24 +36,20 @@ export default function ProjectCard({
     setMousePosition({ x: 0, y: 0 })
   }
 
-  return (
-    <a
-      ref={cardRef}
-      href={link}
-      className={`group relative block rounded-xl overflow-hidden transition-all duration-500 animate-slide-up`}
-      style={{
-        animationDelay: `${600 + index * 100}ms`,
-        transform: isHovered
-          ? `perspective(1000px) rotateX(${-mousePosition.y * 0.3}deg) rotateY(${mousePosition.x * 0.3}deg) translateY(-4px)`
-          : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
-        transition: isHovered
-          ? 'transform 0.1s ease-out'
-          : 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+  const isInternal = link.startsWith('/')
+
+  const cardStyle = {
+    animationDelay: `${600 + index * 100}ms`,
+    transform: isHovered
+      ? `perspective(1000px) rotateX(${-mousePosition.y * 0.3}deg) rotateY(${mousePosition.x * 0.3}deg) translateY(-4px)`
+      : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
+    transition: isHovered
+      ? 'transform 0.1s ease-out'
+      : 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+  }
+
+  const cardContent = (
+    <>
       {/* Card background with border */}
       <div
         className="absolute inset-0 rounded-xl transition-all duration-500"
@@ -183,6 +180,40 @@ export default function ProjectCard({
           background: 'linear-gradient(90deg, transparent, rgba(201, 168, 108, 0.5), transparent)',
         }}
       />
+    </>
+  )
+
+  const sharedClassName = `group relative block rounded-xl overflow-hidden transition-all duration-500 animate-slide-up`
+
+  if (isInternal) {
+    return (
+      <Link
+        ref={cardRef}
+        to={link}
+        className={sharedClassName}
+        style={cardStyle}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {cardContent}
+      </Link>
+    )
+  }
+
+  return (
+    <a
+      ref={cardRef}
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={sharedClassName}
+      style={cardStyle}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {cardContent}
     </a>
   )
 }

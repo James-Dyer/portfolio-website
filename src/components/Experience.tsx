@@ -15,9 +15,9 @@ const experiences = [
   },
   {
     company: 'Sigma Chi Fraternity',
-    role: 'IT Chairman',
+    role: 'Website Chairman',
     date: 'Dec 2024 – Jun 2025',
-    location: 'UC Merced',
+    location: 'Merced, CA',
   },
 ]
 

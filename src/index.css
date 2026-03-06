@@ -22,6 +22,8 @@
   --color-gold: #c9a86c;
   --color-gold-dim: rgba(201, 168, 108, 0.15);
   --color-line: rgba(255, 255, 255, 0.08);
+  --color-salmon: #e8553e;
+  --color-salmon-dim: rgba(232, 85, 62, 0.12);
 }
 
 @layer base {

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import MagneticShapes from './components/MagneticShapes'
 import Projects from './components/Projects'
 import Experience from './components/Experience'
+import ProjectsPage from './pages/ProjectsPage'
 
-export default function App() {
+function HomePage() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -189,5 +191,14 @@ export default function App() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/projects" element={<ProjectsPage />} />
+    </Routes>
   )
 }
