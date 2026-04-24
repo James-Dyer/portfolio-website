@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import lGameCliImage from '../assets/projects/l-game-cli.png'
+import realLGameLayoutImage from '../assets/projects/real-l-game-layout.png'
 
 interface Project {
   id: string
@@ -17,6 +19,15 @@ interface Project {
   architecture: string
   challenges: string[]
   results?: string | null
+  media?: {
+    demoLabel?: string
+    screenshots?: {
+      src: string
+      alt: string
+      caption: string
+      objectFit?: 'contain' | 'cover'
+    }[]
+  }
 }
 
 const S = 'var(--color-salmon)'
@@ -109,6 +120,23 @@ const projects: Project[] = [
     ],
     results:
       'Delivered a fast deterministic CLI implementation with optimal-play behavior across human, agent-based, and agent-vs-agent modes.',
+    media: {
+      demoLabel: 'Browser demo possible with Pyodide or a small TS port',
+      screenshots: [
+        {
+          src: realLGameLayoutImage,
+          alt: 'Original L-Game board layout from Wikipedia',
+          caption: 'Original L-Game layout',
+          objectFit: 'contain',
+        },
+        {
+          src: lGameCliImage,
+          alt: 'CLI screenshot of the Python L-Game recreation',
+          caption: 'Python CLI recreation',
+          objectFit: 'contain',
+        },
+      ],
+    },
   },
 ]
 
@@ -126,7 +154,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-function VideoPlaceholder() {
+function DemoPlaceholder({ label = 'Demo Video' }: { label?: string }) {
   return (
     <div
       className="relative aspect-video rounded-lg overflow-hidden flex items-center justify-center"
@@ -142,7 +170,7 @@ function VideoPlaceholder() {
           </svg>
         </div>
         <p className="font-sans text-[10px] tracking-widest uppercase" style={{ color: SD(0.35) }}>
-          Demo Video
+          {label}
         </p>
       </div>
     </div>
@@ -159,6 +187,41 @@ function ScreenshotPlaceholder() {
         Screenshot
       </p>
     </div>
+  )
+}
+
+function ProjectScreenshot({
+  src,
+  alt,
+  caption,
+  objectFit = 'cover',
+}: {
+  src: string
+  alt: string
+  caption: string
+  objectFit?: 'contain' | 'cover'
+}) {
+  return (
+    <figure
+      className="relative aspect-[16/10] rounded-md overflow-hidden"
+      style={{ background: SD(0.03), border: `1px solid ${SD(0.12)}` }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        className="absolute inset-0 h-full w-full"
+        style={{ objectFit }}
+      />
+      <figcaption
+        className="absolute inset-x-0 bottom-0 px-3 py-2 font-sans text-[9px] tracking-[0.18em] uppercase"
+        style={{
+          color: 'rgba(250,248,245,0.8)',
+          background: 'linear-gradient(180deg, rgba(12,12,12,0) 0%, rgba(12,12,12,0.88) 100%)',
+        }}
+      >
+        {caption}
+      </figcaption>
+    </figure>
   )
 }
 
@@ -216,10 +279,24 @@ function ProjectSection({ project, isLast }: { project: Project; isLast: boolean
         </div>
 
         <div className="lg:col-span-3 space-y-3">
-          <VideoPlaceholder />
+          <DemoPlaceholder label={project.media?.demoLabel} />
           <div className="grid grid-cols-2 gap-3">
-            <ScreenshotPlaceholder />
-            <ScreenshotPlaceholder />
+            {project.media?.screenshots?.length ? (
+              project.media.screenshots.map((screenshot) => (
+                <ProjectScreenshot
+                  key={screenshot.src}
+                  src={screenshot.src}
+                  alt={screenshot.alt}
+                  caption={screenshot.caption}
+                  objectFit={screenshot.objectFit}
+                />
+              ))
+            ) : (
+              <>
+                <ScreenshotPlaceholder />
+                <ScreenshotPlaceholder />
+              </>
+            )}
           </div>
         </div>
       </div>
