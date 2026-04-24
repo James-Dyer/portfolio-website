@@ -23,8 +23,8 @@ interface Experience {
   learned: string[]
 }
 
-const S = 'var(--color-salmon)'
-const SD = (o: number) => `rgba(232,85,62,${o})`
+const S = 'var(--color-gold)'
+const SD = (o: number) => `rgba(201,168,108,${o})`
 
 const experiences: Experience[] = [
   {

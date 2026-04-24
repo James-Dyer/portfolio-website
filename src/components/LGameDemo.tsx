@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
-const S = 'var(--color-salmon)'
-const SD = (opacity: number) => `rgba(232,85,62,${opacity})`
+const S = 'var(--color-gold)'
+const SD = (opacity: number) => `rgba(201,168,108,${opacity})`
 const MONO = '"IBM Plex Mono", "SFMono-Regular", Consolas, monospace'
 
 function BoardLine({ line }: { line: string }) {

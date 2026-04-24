@@ -10,7 +10,7 @@ const projects = [
   {
     id: 'ai-tutor',
     title: 'Software Engineering Tutor',
-    subtitle: 'Full-stack guided coding platform with an LLM workflow and in-browser Python IDE',
+    subtitle: 'Guided coding platform with an LLM workflow and in-browser Python IDE',
     techStack: 'React / Flask / PostgreSQL / OpenAI API',
   },
   {
