@@ -104,7 +104,7 @@ const projects: Project[] = [
       'Human vs CPU, Human vs Human, and CPU vs CPU gameplay modes',
       'Deterministic game-playing agent driven by search-based move selection',
       'Optimization techniques to preserve fast decision-making while maintaining optimal play',
-      'Browser terminal demo powered by Pyodide with typed move entry and guided controls',
+      'Browser terminal replay demo showing a baked sequence of optimal-play states',
       'State evaluation logic tuned for reliable move quality across gameplay modes',
       'Support for agent-vs-agent runs to validate play behavior and debugging',
     ],
