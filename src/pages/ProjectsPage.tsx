@@ -69,7 +69,7 @@ const projects: Project[] = [
   {
     id: 'ai-tutor',
     number: '02',
-    title: 'AI-Assisted Software Engineering Tutor',
+    title: 'Software Engineering Tutor',
     subtitle: 'Guided Full-Stack SWE Learning Platform',
     description:
       'A full-stack platform that guides students through software engineering assignments without revealing solutions. The system turns prompts into learning goals, structured plans, and contextual hints while keeping the student in control of the implementation work.',
@@ -96,7 +96,7 @@ const projects: Project[] = [
   {
     id: 'lgame',
     number: '03',
-    title: 'L-Game with Optimal Game-Playing Agent',
+    title: 'L-Game',
     subtitle: "Search-Based CLI Reimplementation of Edward de Bono's L-Game",
     description:
       "A Python reimplementation of Edward de Bono's L-Game with support for human, agent-based, and agent-vs-agent play. The project centers on a deterministic agent that uses search and state evaluation to select optimal moves while keeping turn times fast.",

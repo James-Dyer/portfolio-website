@@ -9,13 +9,13 @@ const projects = [
   },
   {
     id: 'ai-tutor',
-    title: 'AI-Assisted Software Engineering Tutor',
+    title: 'Software Engineering Tutor',
     subtitle: 'Full-stack guided coding platform with an LLM workflow and in-browser Python IDE',
     techStack: 'React / Flask / PostgreSQL / OpenAI API',
   },
   {
     id: 'lgame',
-    title: 'L-Game with Optimal Game-Playing Agent',
+    title: 'L-Game',
     subtitle: "Python CLI reimplementation with PvP and CPU modes",
     techStack: 'Python',
   },
