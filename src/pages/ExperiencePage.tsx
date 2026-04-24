@@ -324,6 +324,10 @@ function ExperienceSection({ experience, isLast }: { experience: Experience; isL
 
 export default function ExperiencePage() {
   const location = useLocation()
+  const navItems = [
+    { to: '/projects', label: 'Projects' },
+    { to: '/experience', label: 'Experience' },
+  ]
 
   useEffect(() => {
     if (location.hash) {
@@ -343,7 +347,7 @@ export default function ExperiencePage() {
 
       {/* ── Sticky nav ── */}
       <nav
-        className="sticky top-0 z-50 px-6 lg:px-12 py-4 flex items-center justify-between"
+        className="sticky top-0 z-50 px-6 lg:px-12 py-4 flex items-center gap-6"
         style={{
           background: 'rgba(12,12,12,0.9)',
           backdropFilter: 'blur(14px)',
@@ -352,8 +356,9 @@ export default function ExperiencePage() {
       >
         <Link
           to="/"
-          className="flex items-center gap-2 font-sans text-sm group transition-colors duration-200"
+          className="flex items-center font-sans text-sm group transition-colors duration-200"
           style={{ color: 'rgba(138,138,138,0.7)' }}
+          aria-label="Back to home"
         >
           <svg
             className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5"
@@ -365,25 +370,23 @@ export default function ExperiencePage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
           </svg>
-          <span className="group-hover:text-cream transition-colors duration-200">James Dyer</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-6">
-          {experiences.map((e) => (
-            <a
-              key={e.id}
-              href={`#${e.id}`}
-              onClick={(ev) => {
-                ev.preventDefault()
-                document.getElementById(e.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              }}
-              className="font-sans text-xs tracking-wide transition-colors duration-200 hover:text-cream"
-              style={{ color: 'rgba(138,138,138,0.5)' }}
-            >
-              <span style={{ color: SD(0.6) }}>{e.number}</span>{' '}
-              {e.company.split(/[\s.]/)[0]}
-            </a>
-          ))}
+        <div className="flex items-center gap-5">
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.to
+
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="font-sans text-xs tracking-[0.16em] uppercase transition-colors duration-200 hover:text-cream"
+                style={{ color: isActive ? 'rgba(250,248,245,0.92)' : 'rgba(138,138,138,0.58)' }}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
         </div>
       </nav>
 

@@ -1,8 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import lGameCliImage from '../assets/projects/l-game-cli.jpg'
 import realLGameLayoutImage from '../assets/projects/real-l-game-layout.png'
 import LGameDemo from '../components/LGameDemo'
+
+interface Screenshot {
+  src: string
+  alt: string
+  caption: string
+  objectFit?: 'contain' | 'cover'
+}
 
 interface Project {
   id: string
@@ -22,12 +29,7 @@ interface Project {
   results?: string | null
   media?: {
     demoLabel?: string
-    screenshots?: {
-      src: string
-      alt: string
-      caption: string
-      objectFit?: 'contain' | 'cover'
-    }[]
+    screenshots?: Screenshot[]
   }
 }
 
@@ -195,16 +197,21 @@ function ProjectScreenshot({
   alt,
   caption,
   objectFit = 'cover',
+  onOpen,
 }: {
   src: string
   alt: string
   caption: string
   objectFit?: 'contain' | 'cover'
+  onOpen: () => void
 }) {
   return (
-    <figure
-      className="relative aspect-[16/10] rounded-md overflow-hidden"
+    <button
+      type="button"
+      onClick={onOpen}
+      className="relative aspect-[16/10] rounded-md overflow-hidden text-left transition-opacity duration-200 hover:opacity-90 cursor-zoom-in"
       style={{ background: SD(0.03), border: `1px solid ${SD(0.12)}` }}
+      aria-label={`Open fullscreen image: ${caption}`}
     >
       <img
         src={src}
@@ -221,11 +228,19 @@ function ProjectScreenshot({
       >
         {caption}
       </figcaption>
-    </figure>
+    </button>
   )
 }
 
-function ProjectSection({ project, isLast }: { project: Project; isLast: boolean }) {
+function ProjectSection({
+  project,
+  isLast,
+  onOpenScreenshot,
+}: {
+  project: Project
+  isLast: boolean
+  onOpenScreenshot: (screenshot: Screenshot) => void
+}) {
   return (
     <section id={project.id} className="scroll-mt-20">
       {/* ── Project header ── */}
@@ -289,6 +304,7 @@ function ProjectSection({ project, isLast }: { project: Project; isLast: boolean
                   alt={screenshot.alt}
                   caption={screenshot.caption}
                   objectFit={screenshot.objectFit}
+                  onOpen={() => onOpenScreenshot(screenshot)}
                 />
               ))
             ) : (
@@ -391,6 +407,7 @@ function ProjectSection({ project, isLast }: { project: Project; isLast: boolean
 
 export default function ProjectsPage() {
   const location = useLocation()
+  const [selectedScreenshot, setSelectedScreenshot] = useState<Screenshot | null>(null)
 
   useEffect(() => {
     if (location.hash) {
@@ -404,13 +421,37 @@ export default function ProjectsPage() {
     }
   }, [location.hash])
 
+  useEffect(() => {
+    if (!selectedScreenshot) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSelectedScreenshot(null)
+      }
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [selectedScreenshot])
+
+  const navItems = [
+    { to: '/projects', label: 'Projects' },
+    { to: '/experience', label: 'Experience' },
+  ]
+
   return (
     <div className="min-h-screen bg-ink relative">
       <div className="noise-overlay" />
 
       {/* ── Sticky nav ── */}
       <nav
-        className="sticky top-0 z-50 px-6 lg:px-12 py-4 flex items-center justify-between"
+        className="sticky top-0 z-50 px-6 lg:px-12 py-4 flex items-center gap-6"
         style={{
           background: 'rgba(12,12,12,0.9)',
           backdropFilter: 'blur(14px)',
@@ -419,8 +460,9 @@ export default function ProjectsPage() {
       >
         <Link
           to="/"
-          className="flex items-center gap-2 font-sans text-sm group transition-colors duration-200"
+          className="flex items-center font-sans text-sm group transition-colors duration-200"
           style={{ color: 'rgba(138,138,138,0.7)' }}
+          aria-label="Back to home"
         >
           <svg
             className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5"
@@ -432,25 +474,23 @@ export default function ProjectsPage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
           </svg>
-          <span className="group-hover:text-cream transition-colors duration-200">James Dyer</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-6">
-          {projects.map((p) => (
-            <a
-              key={p.id}
-              href={`#${p.id}`}
-              onClick={(e) => {
-                e.preventDefault()
-                document.getElementById(p.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              }}
-              className="font-sans text-xs tracking-wide transition-colors duration-200 hover:text-cream"
-              style={{ color: 'rgba(138,138,138,0.5)' }}
-            >
-              <span style={{ color: SD(0.6) }}>{p.number}</span>{' '}
-              {p.title.split(' ')[0]}
-            </a>
-          ))}
+        <div className="flex items-center gap-5">
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.to
+
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="font-sans text-xs tracking-[0.16em] uppercase transition-colors duration-200 hover:text-cream"
+                style={{ color: isActive ? 'rgba(250,248,245,0.92)' : 'rgba(138,138,138,0.58)' }}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
         </div>
       </nav>
 
@@ -479,9 +519,45 @@ export default function ProjectsPage() {
             key={project.id}
             project={project}
             isLast={index === projects.length - 1}
+            onOpenScreenshot={setSelectedScreenshot}
           />
         ))}
       </div>
+
+      {selectedScreenshot && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
+          style={{ background: 'rgba(12,12,12,0.94)' }}
+          onClick={() => setSelectedScreenshot(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedScreenshot(null)}
+            className="absolute top-5 right-5 font-sans text-xl leading-none transition-opacity duration-200 hover:opacity-70"
+            style={{ color: 'rgba(250,248,245,0.92)' }}
+            aria-label="Close fullscreen image"
+          >
+            ×
+          </button>
+          <figure
+            className="relative max-h-full max-w-6xl w-full"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <img
+              src={selectedScreenshot.src}
+              alt={selectedScreenshot.alt}
+              className="max-h-[82vh] w-full rounded-md"
+              style={{ objectFit: 'contain' }}
+            />
+            <figcaption
+              className="mt-3 text-center font-sans text-[10px] tracking-[0.18em] uppercase"
+              style={{ color: 'rgba(250,248,245,0.72)' }}
+            >
+              {selectedScreenshot.caption}
+            </figcaption>
+          </figure>
+        </div>
+      )}
     </div>
   )
 }
