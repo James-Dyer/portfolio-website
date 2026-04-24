@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import lGameCliImage from '../assets/projects/l-game-cli.jpg'
 import realLGameLayoutImage from '../assets/projects/real-l-game-layout.png'
+import LGameDemo from '../components/LGameDemo'
 
 interface Project {
   id: string
@@ -103,7 +104,7 @@ const projects: Project[] = [
       'Human vs CPU, Human vs Human, and CPU vs CPU gameplay modes',
       'Deterministic game-playing agent driven by search-based move selection',
       'Optimization techniques to preserve fast decision-making while maintaining optimal play',
-      'CLI-based interaction model suitable for both human play and automated agent matchups',
+      'Browser terminal demo powered by Pyodide with typed move entry and guided controls',
       'State evaluation logic tuned for reliable move quality across gameplay modes',
       'Support for agent-vs-agent runs to validate play behavior and debugging',
     ],
@@ -121,7 +122,6 @@ const projects: Project[] = [
     results:
       'Delivered a fast deterministic CLI implementation with optimal-play behavior across human, agent-based, and agent-vs-agent modes.',
     media: {
-      demoLabel: 'Browser demo possible with Pyodide or a small TS port',
       screenshots: [
         {
           src: realLGameLayoutImage,
@@ -279,7 +279,7 @@ function ProjectSection({ project, isLast }: { project: Project; isLast: boolean
         </div>
 
         <div className="lg:col-span-3 space-y-3">
-          <DemoPlaceholder label={project.media?.demoLabel} />
+          {project.id === 'lgame' ? <LGameDemo /> : <DemoPlaceholder label={project.media?.demoLabel} />}
           <div className="grid grid-cols-2 gap-3">
             {project.media?.screenshots?.length ? (
               project.media.screenshots.map((screenshot) => (
