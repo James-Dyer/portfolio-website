@@ -6,6 +6,8 @@ import Experience from './components/Experience'
 import ProjectsPage from './pages/ProjectsPage'
 import ExperiencePage from './pages/ExperiencePage'
 
+const BASE_URL = import.meta.env.BASE_URL
+
 function HomePage() {
   const [mounted, setMounted] = useState(false)
 
@@ -80,9 +82,9 @@ function HomePage() {
             <div className="relative mb-8">
               <div className="aspect-[4/5] bg-ink rounded-xl overflow-hidden">
                 <picture>
-                  <source srcSet="/DSC03663_480.avif" type="image/avif" />
+                  <source srcSet={`${BASE_URL}DSC03663_480.avif`} type="image/avif" />
                   <img
-                    src="/DSC03663.JPG"
+                    src={`${BASE_URL}DSC03663.JPG`}
                     alt="Portrait of James Dyer"
                     className="w-full h-full object-cover"
                     loading="lazy"
