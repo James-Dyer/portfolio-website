@@ -12,33 +12,29 @@ type JsonBridge = {
 type PyodideInstance = {
   runPythonAsync: (code: string) => Promise<unknown>
   globals: {
-    get: (name: string) => {
-      call: (...args: unknown[]) => unknown
-      destroy?: () => void
-    }
+    get: (name: string) => PyodideCallable
   }
+}
+
+type PyodideCallable = ((...args: unknown[]) => unknown) & {
+  destroy?: () => void
+}
+
+type PyodideModule = {
+  loadPyodide: (options: { indexURL: string }) => Promise<PyodideInstance>
 }
 
 const workerScope = globalThis as unknown as {
   postMessage: (message: LGameWorkerResponse) => void
   onmessage: ((event: MessageEvent<LGameWorkerRequest>) => void) | null
 }
-declare function importScripts(...urls: string[]): void
 
 let bridgePromise: Promise<JsonBridge> | null = null
 
-function toBridgeFunction<T extends (...args: never[]) => unknown>(fn: {
-  call: (...args: unknown[]) => unknown
-  destroy?: () => void
-}): T {
-  return ((...args: unknown[]) => fn.call(...args)) as unknown as T
-}
-
 async function createBridge(): Promise<JsonBridge> {
-  importScripts('/pyodide/pyodide.js')
-  const pyodide = await (globalThis as unknown as {
-    loadPyodide: (options: { indexURL: string }) => Promise<PyodideInstance>
-  }).loadPyodide({ indexURL: '/pyodide/' })
+  const pyodideUrl = new URL('/pyodide/pyodide.mjs', self.location.origin).href
+  const pyodideModule = (await import(/* @vite-ignore */ pyodideUrl)) as PyodideModule
+  const pyodide = await pyodideModule.loadPyodide({ indexURL: '/pyodide/' })
 
   await pyodide.runPythonAsync(lGameSource)
   await pyodide.runPythonAsync(`
@@ -67,11 +63,12 @@ def _browser_submit_command_json(state_json, command):
   const submitCommand = pyodide.globals.get('_browser_submit_command_json')
 
   return {
-    newGame: toBridgeFunction<() => string>(newGame),
-    resetGame: toBridgeFunction<() => string>(resetGame),
-    renderTerminal: toBridgeFunction<(stateJson: string) => string>(renderTerminal),
-    getHint: toBridgeFunction<(stateJson: string) => string>(getHint),
-    submitCommand: toBridgeFunction<(stateJson: string, command: string) => string>(submitCommand),
+    newGame: () => newGame() as string,
+    resetGame: () => resetGame() as string,
+    renderTerminal: (stateJson: string) => renderTerminal(stateJson) as string,
+    getHint: (stateJson: string) => getHint(stateJson) as string,
+    submitCommand: (stateJson: string, command: string) =>
+      submitCommand(stateJson, command) as string,
   }
 }
 

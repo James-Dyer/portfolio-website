@@ -4,24 +4,6 @@ import type { LGameState, LGameStatus, LGameWorkerResponse } from '../types/lgam
 const S = 'var(--color-salmon)'
 const SD = (opacity: number) => `rgba(232,85,62,${opacity})`
 
-function statusLabel(status: LGameStatus, paused: boolean) {
-  if (paused) {
-    return 'Paused'
-  }
-  switch (status) {
-    case 'loading':
-      return 'Loading'
-    case 'running':
-      return 'Thinking'
-    case 'game_over':
-      return 'Game Over'
-    case 'error':
-      return 'Error'
-    default:
-      return 'Ready'
-  }
-}
-
 export default function LGameDemo() {
   const workerRef = useRef<Worker | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -37,7 +19,7 @@ export default function LGameDemo() {
 
   useEffect(() => {
     const worker = new Worker(new URL('../workers/lGameWorker.ts', import.meta.url), {
-      type: 'classic',
+      type: 'module',
     })
 
     workerRef.current = worker
@@ -59,7 +41,8 @@ export default function LGameDemo() {
       }
       if (next.hint !== undefined) {
         setHint(next.hint)
-      } else if (next.serializedState?.move_count) {
+        setCommand(next.hint)
+      } else if (next.serializedState) {
         setHint('')
       }
 
@@ -147,7 +130,7 @@ export default function LGameDemo() {
   return (
     <div
       ref={containerRef}
-      className="relative overflow-hidden rounded-lg"
+      className="relative aspect-square w-full max-w-[42rem] overflow-hidden rounded-lg"
       style={{
         background: 'linear-gradient(180deg, rgba(13,13,13,0.96) 0%, rgba(8,8,8,0.98) 100%)',
         border: `1px solid ${SD(0.24)}`,
@@ -156,33 +139,11 @@ export default function LGameDemo() {
       onPointerDown={resume}
     >
       <div
-        className="flex items-center justify-between gap-4 border-b px-4 py-3"
-        style={{ borderColor: SD(0.12), background: 'rgba(255,255,255,0.02)' }}
-      >
-        <div>
-          <p className="font-sans text-[10px] tracking-[0.18em] uppercase" style={{ color: SD(0.62) }}>
-            Interactive Browser Demo
-          </p>
-          <p className="font-body text-xs text-cream/60">Human first, deterministic CPU response, typed move entry.</p>
-        </div>
-        <span
-          className="rounded-full px-2.5 py-1 font-sans text-[10px] uppercase tracking-[0.18em]"
-          style={{
-            color: paused ? 'rgba(250,248,245,0.92)' : SD(0.78),
-            background: paused ? 'rgba(160,160,160,0.18)' : SD(0.09),
-            border: `1px solid ${paused ? 'rgba(190,190,190,0.24)' : SD(0.22)}`,
-          }}
-        >
-          {statusLabel(status, paused)}
-        </span>
-      </div>
-
-      <div
-        className="space-y-4 p-4 transition-all duration-200"
+        className="flex h-full flex-col p-3 transition-all duration-200"
         style={{ filter: paused ? 'blur(6px)' : 'none', opacity: paused ? 0.55 : 1 }}
       >
         <pre
-          className="min-h-[23rem] overflow-x-auto rounded-md p-4 text-[13px] leading-6 whitespace-pre-wrap"
+          className="min-h-0 flex-1 overflow-x-auto rounded-md px-4 py-3 text-[12px] leading-5 whitespace-pre-wrap"
           style={{
             fontFamily: '"IBM Plex Mono", "SFMono-Regular", Consolas, monospace',
             color: 'rgba(250,248,245,0.92)',
@@ -193,52 +154,8 @@ export default function LGameDemo() {
           {terminalText}
         </pre>
 
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            disabled={disabled}
-            onClick={resetGame}
-            className="rounded-md px-3 py-2 font-sans text-[11px] uppercase tracking-[0.18em] transition disabled:cursor-not-allowed disabled:opacity-40"
-            style={{ color: S, border: `1px solid ${SD(0.24)}`, background: SD(0.05) }}
-          >
-            Reset
-          </button>
-          <button
-            type="button"
-            disabled={disabled}
-            onClick={requestHint}
-            className="rounded-md px-3 py-2 font-sans text-[11px] uppercase tracking-[0.18em] transition disabled:cursor-not-allowed disabled:opacity-40"
-            style={{ color: S, border: `1px solid ${SD(0.24)}`, background: SD(0.05) }}
-          >
-            Hint
-          </button>
-          <button
-            type="button"
-            disabled={disabled || !hint}
-            onClick={() => setCommand(hint)}
-            className="rounded-md px-3 py-2 font-sans text-[11px] uppercase tracking-[0.18em] transition disabled:cursor-not-allowed disabled:opacity-40"
-            style={{ color: S, border: `1px solid ${SD(0.24)}`, background: SD(0.05) }}
-          >
-            Use Hint
-          </button>
-          <div className="min-w-0 flex-1 rounded-md px-3 py-2 font-body text-sm text-cream/65" style={{ background: 'rgba(255,255,255,0.03)' }}>
-            {hint ? (
-              <>
-                <span className="font-sans text-[10px] uppercase tracking-[0.16em]" style={{ color: SD(0.66) }}>
-                  {state?.move_count === 0 ? 'Opening suggestion' : 'Current hint'}
-                </span>{' '}
-                <span style={{ color: 'rgba(250,248,245,0.92)' }}>{hint}</span>
-              </>
-            ) : (
-              <span className="font-sans text-[10px] uppercase tracking-[0.16em]" style={{ color: SD(0.38) }}>
-                Request a hint to preview a legal move.
-              </span>
-            )}
-          </div>
-        </div>
-
         <form
-          className="flex flex-col gap-2 sm:flex-row sm:items-center"
+          className="mt-3"
           onSubmit={(event) => {
             event.preventDefault()
             submitCommand()
@@ -251,27 +168,49 @@ export default function LGameDemo() {
             disabled={disabled}
             onChange={(event) => setCommand(event.target.value)}
             onFocus={() => setPaused(false)}
-            placeholder="Enter move, help, or reset"
-            className="min-w-0 flex-1 rounded-md px-3 py-3 font-body text-sm outline-none transition disabled:cursor-not-allowed disabled:opacity-40"
+            placeholder={hint || ''}
+            className="w-full rounded-md px-3 py-2 font-body text-sm outline-none transition disabled:cursor-not-allowed disabled:opacity-40"
             style={{
               color: 'rgba(250,248,245,0.94)',
               background: 'rgba(255,255,255,0.03)',
               border: `1px solid ${SD(0.18)}`,
             }}
           />
-          <button
-            type="submit"
-            disabled={disabled || !command.trim()}
-            className="rounded-md px-4 py-3 font-sans text-[11px] uppercase tracking-[0.18em] transition disabled:cursor-not-allowed disabled:opacity-40"
-            style={{ color: 'rgba(12,12,12,0.92)', background: S }}
-          >
-            Submit
-          </button>
         </form>
 
-        <p className="font-sans text-[10px] tracking-[0.16em] uppercase" style={{ color: SD(0.48) }}>
-          Format: `x y O` or `x y O a b c d`
-        </p>
+        <div
+          className="mt-3 flex items-center justify-between rounded-md px-1 py-1"
+          style={{ border: `1px solid ${SD(0.14)}`, background: 'rgba(255,255,255,0.02)' }}
+        >
+          <button
+            type="button"
+            aria-label="Reset game"
+            title="Reset game"
+            disabled={disabled}
+            onClick={resetGame}
+            className="flex h-8 w-8 items-center justify-center rounded-sm transition disabled:cursor-not-allowed disabled:opacity-40"
+            style={{ color: S }}
+          >
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12a9 9 0 1 0 3-6.708M3 3v6h6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            aria-label="Hint"
+            title="Hint"
+            disabled={disabled}
+            onClick={requestHint}
+            className="flex h-8 w-8 items-center justify-center rounded-sm transition disabled:cursor-not-allowed disabled:opacity-40"
+            style={{ color: S }}
+          >
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 18h6" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 22h4" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.5 14.5C7.56 13.72 7 12.55 7 11.25a5 5 0 1 1 10 0c0 1.3-.56 2.47-1.5 3.25-.65.54-1.1 1.1-1.28 1.75h-4.44c-.18-.65-.63-1.21-1.28-1.75Z" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {paused && (
@@ -288,7 +227,7 @@ export default function LGameDemo() {
               backdropFilter: 'blur(10px)',
             }}
           >
-            Click anywhere to resume
+            Click to demo
           </div>
         </div>
       )}
@@ -299,10 +238,7 @@ export default function LGameDemo() {
           style={{ background: 'rgba(10,10,10,0.92)' }}
         >
           <div className="max-w-md text-center">
-            <p className="font-sans text-[10px] tracking-[0.2em] uppercase" style={{ color: SD(0.66) }}>
-              Demo failed to load
-            </p>
-            <p className="mt-3 font-body text-sm text-cream/70">{fatalError}</p>
+            <p className="font-body text-sm text-cream/70">{fatalError}</p>
           </div>
         </div>
       )}
