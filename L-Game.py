@@ -11,6 +11,7 @@ DEFAULT_STATE = {
     "last_player_move": None,
     "last_cpu_move": None,
     "result": None,
+    "history": [],
 }
 
 ORIENTATIONS = {
@@ -38,7 +39,9 @@ def clone_state(state):
 
 
 def new_game():
-    return clone_state(DEFAULT_STATE)
+    state = clone_state(DEFAULT_STATE)
+    state["history"] = opening_history(state)
+    return state
 
 
 def reset_game():
@@ -221,39 +224,46 @@ def render_board(board):
     return "\n".join(lines)
 
 
-def render_terminal(state):
+def opening_history(state):
     board = build_board(state)
-    lines = [
-        "L-Game Browser Demo",
-        "Player vs Computer",
+    return [
+        render_board(board),
         "",
-        "Commands: `x y O` or `x y O a b c d`",
-        "Extras: `help`, `reset`",
-        "",
-        "You are Player 1. The computer is Player 2.",
+        "Player 1 to move...",
     ]
 
-    if state["last_player_move"]:
-        lines.append(f"Your last move: {state['last_player_move']}")
-    if state["last_cpu_move"]:
-        lines.append(f"Computer move: {state['last_cpu_move']}")
-    if state["result"]:
-        lines.append(state["result"])
-    elif state["turn"] == 1:
-        lines.append("Awaiting your move.")
-    else:
-        lines.append("Computer is evaluating...")
 
-    lines.extend(["", render_board(board)])
-
-    if state["result"] is None and state["turn"] == 1:
-        lines.extend(["", "player1>"])
-
-    return "\n".join(lines)
+def append_history(state, *entries):
+    history = state.setdefault("history", [])
+    for entry in entries:
+        if entry is None:
+            continue
+        history.append(entry)
 
 
-def transient_terminal(state, message):
-    return f"{render_terminal(state)}\n\n{message}"
+def append_turn_snapshot(state):
+    board = build_board(state)
+    append_history(
+        state,
+        "",
+        render_board(board),
+        "",
+        "Player 1 to move..." if state["turn"] == 1 else "Computer's turn...",
+    )
+
+
+def render_terminal(state):
+    return "\n".join(state.get("history", []))
+
+
+def transient_terminal(state, message, command=None, reprompt=True):
+    preview_state = clone_state(state)
+    if command is not None:
+        append_history(preview_state, command)
+    append_history(preview_state, message)
+    if reprompt and preview_state["result"] is None and preview_state["turn"] == 1:
+        append_history(preview_state, "", "Player 1 to move...")
+    return render_terminal(preview_state)
 
 
 def get_hint(state):
@@ -373,7 +383,7 @@ def submit_command(state, command):
         message = "Enter a move, `help`, or `reset`."
         return {
             "state": clone_state(state),
-            "terminal_text": transient_terminal(state, message),
+            "terminal_text": transient_terminal(state, message, command=""),
             "status": "awaiting_input",
         }
 
@@ -393,7 +403,7 @@ def submit_command(state, command):
         )
         return {
             "state": clone_state(state),
-            "terminal_text": transient_terminal(state, message),
+            "terminal_text": transient_terminal(state, message, command=text),
             "status": "awaiting_input",
         }
 
@@ -401,7 +411,9 @@ def submit_command(state, command):
         message = "The game is over. Use `reset` to start again."
         return {
             "state": clone_state(state),
-            "terminal_text": transient_terminal(state, message),
+            "terminal_text": transient_terminal(
+                state, message, command=text, reprompt=False
+            ),
             "status": "game_over",
         }
 
@@ -410,7 +422,9 @@ def submit_command(state, command):
     except ValueError as error:
         return {
             "state": clone_state(state),
-            "terminal_text": transient_terminal(state, f"Invalid input: {error}"),
+            "terminal_text": transient_terminal(
+                state, f"Invalid input: {error}", command=text
+            ),
             "status": "awaiting_input",
         }
 
@@ -419,7 +433,9 @@ def submit_command(state, command):
         return {
             "state": clone_state(state),
             "terminal_text": transient_terminal(
-                state, "Invalid move: that action is not legal in the current position."
+                state,
+                "Invalid move: that action is not legal in the current position.",
+                command=text,
             ),
             "status": "awaiting_input",
         }
@@ -428,10 +444,18 @@ def submit_command(state, command):
     next_state["move_count"] = state["move_count"] + 1
     next_state["last_player_move"] = format_move(action)
     next_state["last_cpu_move"] = None
+    append_history(
+        next_state,
+        text,
+        "Computer's turn...",
+        "",
+        render_board(build_board(next_state)),
+    )
 
     result = resolve_terminal_state(next_state)
     if result is not None:
         next_state["result"] = result
+        append_history(next_state, "", result)
         return {
             "state": next_state,
             "terminal_text": render_terminal(next_state),
@@ -440,6 +464,12 @@ def submit_command(state, command):
 
     cpu_action = choose_cpu_action(next_state)
     if cpu_action is not None:
+        append_history(
+            next_state,
+            "",
+            "Computer's move:",
+            format_move(cpu_action),
+        )
         next_state = apply_action(next_state, cpu_action)
         next_state["move_count"] = state["move_count"] + 1
         next_state["last_player_move"] = format_move(action)
@@ -448,8 +478,10 @@ def submit_command(state, command):
     result = resolve_terminal_state(next_state)
     if result is not None:
         next_state["result"] = result
+        append_history(next_state, "", result)
         status = "game_over"
     else:
+        append_turn_snapshot(next_state)
         status = "awaiting_input"
 
     return {

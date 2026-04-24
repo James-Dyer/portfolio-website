@@ -3,11 +3,76 @@ import type { LGameState, LGameStatus, LGameWorkerResponse } from '../types/lgam
 
 const S = 'var(--color-salmon)'
 const SD = (opacity: number) => `rgba(232,85,62,${opacity})`
+const MONO = '"IBM Plex Mono", "SFMono-Regular", Consolas, monospace'
+
+function BoardLine({ line }: { line: string }) {
+  if (line === '  +---------+') {
+    return <span style={{ color: 'rgba(250,248,245,0.52)' }}>{line}</span>
+  }
+
+  if (line === '    1 2 3 4') {
+    return (
+      <>
+        <span style={{ color: 'rgba(250,248,245,0.42)' }}>    </span>
+        {[1, 2, 3, 4].map((value, index) => (
+          <span key={value}>
+            <span style={{ color: 'rgba(250,248,245,0.62)' }}>{value}</span>
+            {index < 3 ? <span style={{ color: 'rgba(250,248,245,0.32)' }}> </span> : null}
+          </span>
+        ))}
+      </>
+    )
+  }
+
+  if (/^[1-4] \| /.test(line)) {
+    const rowLabel = line.slice(0, 1)
+    const cells = line.slice(4, -2).split(' ')
+    return (
+      <>
+        <span style={{ color: 'rgba(250,248,245,0.62)' }}>{rowLabel}</span>
+        <span style={{ color: 'rgba(250,248,245,0.42)' }}> | </span>
+        {cells.map((cell, index) => {
+          let color = 'rgba(250,248,245,0.5)'
+          if (cell === '1') {
+            color = 'rgb(232,85,62)'
+          } else if (cell === '2') {
+            color = 'rgb(89,149,255)'
+          } else if (cell === '.' || cell === 'N') {
+            color = 'rgba(190,190,190,0.72)'
+          }
+          return (
+            <span key={`${rowLabel}-${index}`}>
+              <span style={{ color }}>{cell}</span>
+              {index < cells.length - 1 ? <span style={{ color: 'rgba(250,248,245,0.24)' }}> </span> : null}
+            </span>
+          )
+        })}
+        <span style={{ color: 'rgba(250,248,245,0.42)' }}> |</span>
+      </>
+    )
+  }
+
+  return <span>{line}</span>
+}
+
+function TerminalText({ text }: { text: string }) {
+  const lines = text.split('\n')
+  return (
+    <>
+      {lines.map((line, index) => (
+        <div key={`${line}-${index}`}>
+          <BoardLine line={line} />
+        </div>
+      ))}
+    </>
+  )
+}
 
 export default function LGameDemo() {
   const workerRef = useRef<Worker | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const terminalRef = useRef<HTMLDivElement | null>(null)
 
   const [terminalText, setTerminalText] = useState('Loading Python runtime…')
   const [status, setStatus] = useState<LGameStatus>('loading')
@@ -88,10 +153,15 @@ export default function LGameDemo() {
     }
   }, [])
 
+  useEffect(() => {
+    terminalRef.current?.scrollTo({ top: terminalRef.current.scrollHeight })
+  }, [terminalText])
+
   const disabled = paused || status === 'loading' || status === 'running' || fatalError !== null
+  const showPrompt = !fatalError && status !== 'loading' && status !== 'running'
 
   const submitCommand = () => {
-    if (!state || disabled || !command.trim()) {
+    if (!state || disabled) {
       return
     }
 
@@ -142,41 +212,53 @@ export default function LGameDemo() {
         className="flex h-full flex-col p-3 transition-all duration-200"
         style={{ filter: paused ? 'blur(6px)' : 'none', opacity: paused ? 0.55 : 1 }}
       >
-        <pre
-          className="min-h-0 flex-1 overflow-x-auto rounded-md px-4 py-3 text-[12px] leading-5 whitespace-pre-wrap"
+        <div
+          ref={terminalRef}
+          className="relative min-h-0 flex-1 overflow-x-auto rounded-md px-4 py-3 text-[12px] leading-5 whitespace-pre-wrap"
           style={{
-            fontFamily: '"IBM Plex Mono", "SFMono-Regular", Consolas, monospace',
+            fontFamily: MONO,
             color: 'rgba(250,248,245,0.92)',
             background: 'rgba(0,0,0,0.48)',
             border: `1px solid ${SD(0.14)}`,
           }}
+          onPointerDown={() => inputRef.current?.focus()}
         >
-          {terminalText}
-        </pre>
-
-        <form
-          className="mt-3"
-          onSubmit={(event) => {
-            event.preventDefault()
-            submitCommand()
-          }}
-        >
-          <input
-            ref={inputRef}
-            type="text"
-            value={command}
-            disabled={disabled}
-            onChange={(event) => setCommand(event.target.value)}
-            onFocus={() => setPaused(false)}
-            placeholder={hint || ''}
-            className="w-full rounded-md px-3 py-2 font-body text-sm outline-none transition disabled:cursor-not-allowed disabled:opacity-40"
-            style={{
-              color: 'rgba(250,248,245,0.94)',
-              background: 'rgba(255,255,255,0.03)',
-              border: `1px solid ${SD(0.18)}`,
+          <div aria-hidden="true">
+            <TerminalText text={terminalText} />
+            {showPrompt ? (
+              <div style={{ minHeight: '1.25rem' }}>
+                <span>{command}</span>
+                {!disabled ? (
+                  <span
+                    className="inline-block h-[1.05em] w-[0.55ch] align-[-0.18em]"
+                    style={{ background: 'rgba(250,248,245,0.92)' }}
+                  />
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault()
+              submitCommand()
             }}
-          />
-        </form>
+            className="absolute inset-0 opacity-0"
+            aria-hidden="true"
+          >
+            <input
+              ref={inputRef}
+              type="text"
+              value={command}
+              disabled={disabled}
+              onChange={(event) => setCommand(event.target.value)}
+              onFocus={() => setPaused(false)}
+              className="h-full w-full"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
+            />
+          </form>
+        </div>
 
         <div
           className="mt-3 flex items-center justify-between rounded-md px-1 py-1"

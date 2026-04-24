@@ -359,14 +359,6 @@ function ProjectSection({ project, isLast }: { project: Project; isLast: boolean
         </div>
       </div>
 
-      {/* ── Architecture ── */}
-      <div className="mb-10">
-        <SectionLabel>Architecture</SectionLabel>
-        <p className="font-body text-sm text-cream/70 leading-relaxed max-w-3xl">
-          {project.architecture}
-        </p>
-      </div>
-
       {/* ── Key Challenges ── */}
       <div className="mb-10">
         <SectionLabel>Key Technical Challenges</SectionLabel>
@@ -384,14 +376,6 @@ function ProjectSection({ project, isLast }: { project: Project; isLast: boolean
           ))}
         </ol>
       </div>
-
-      {/* ── Results ── */}
-      {project.results && (
-        <div className="mb-10">
-          <SectionLabel>Results</SectionLabel>
-          <p className="font-body text-sm text-cream/70 leading-relaxed max-w-3xl">{project.results}</p>
-        </div>
-      )}
 
       {/* ── Section divider ── */}
       {!isLast && (

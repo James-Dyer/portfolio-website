@@ -115,7 +115,7 @@ const experiences: Experience[] = [
     id: 'sigmachi',
     number: '03',
     company: 'Sigma Chi Fraternity, Lambda Delta Chapter',
-    role: 'Website Chairman',
+    role: 'Web Developer',
     duration: 'Dec 2024 – Jun 2025',
     location: 'Merced, CA',
     teamArea: 'Chapter Website · Recruitment and Event Operations',

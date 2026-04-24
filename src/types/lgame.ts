@@ -22,6 +22,7 @@ export interface LGameState {
   last_player_move: string | null
   last_cpu_move: string | null
   result: string | null
+  history: string[]
 }
 
 export type LGameWorkerRequest =

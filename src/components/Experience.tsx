@@ -18,7 +18,7 @@ const experiences = [
   {
     id: 'sigmachi',
     company: 'Sigma Chi Fraternity, Lambda Delta Chapter',
-    role: 'Website Chairman',
+    role: 'Web Developer',
     date: 'Dec 2024 – Jun 2025',
     location: 'Merced, CA',
   },
