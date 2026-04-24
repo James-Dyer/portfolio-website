@@ -17,6 +17,7 @@ interface Experience {
   location: string
   teamArea: string
   summary: string
+  website?: string
   tech: string[]
   contributions: Contribution[]
   impact: string[]
@@ -121,6 +122,7 @@ const experiences: Experience[] = [
     teamArea: 'Chapter Website · Recruitment and Event Operations',
     summary:
       'Built and deployed the chapter website as a React-based product for recruitment, event visibility, and philanthropy engagement. The site included a real-time leaderboard backed by spreadsheet data and supported 150+ active users during a high-traffic philanthropy event.',
+    website: 'https://ucmsigmachi.org',
     tech: ['React', 'JavaScript', 'GitHub Pages', 'Spreadsheet Data Integration'],
     contributions: [
       {
@@ -204,6 +206,33 @@ function ExperienceSection({ experience, isLast }: { experience: Experience; isL
         <p className="font-body text-base text-cream/70 leading-relaxed max-w-2xl">
           {experience.summary}
         </p>
+        {experience.website && (
+          <a
+            href={experience.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 font-sans text-xs tracking-[0.14em] uppercase transition-all duration-200 hover:-translate-y-0.5 hover:text-cream"
+            style={{
+              color: SD(0.75),
+              border: `1px solid ${SD(0.22)}`,
+              background: SD(0.05),
+            }}
+          >
+            <span>Live Site</span>
+            <span>{experience.website.replace(/^https?:\/\//, '')}</span>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 16 16"
+              className="h-3 w-3 flex-shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M5 11 11 5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M7 5h4v4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+        )}
       </div>
 
       {/* ── Tech Stack ── */}
