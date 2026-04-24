@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import tutorScreenshot1 from '../assets/projects/ai-tutor/dashboard.png'
+import tutorScreenshot2 from '../assets/projects/ai-tutor/planning-workflow.png'
+import tutorScreenshot3 from '../assets/projects/ai-tutor/editor-and-hints.png'
+import tutorScreenshot4 from '../assets/projects/ai-tutor/integrated-tutor-view.png'
 import lGameCliImage from '../assets/projects/l-game-cli.jpg'
 import realLGameLayoutImage from '../assets/projects/real-l-game-layout.png'
 import LGameDemo from '../components/LGameDemo'
@@ -94,6 +98,34 @@ const projects: Project[] = [
       'Embedding a browser-based Python IDE into the tutoring flow so students could iterate without context switching away from the platform.',
     ],
     results: null,
+    media: {
+      screenshots: [
+        {
+          src: tutorScreenshot1,
+          alt: 'Assignment dashboard view in the software engineering tutor platform',
+          caption: 'Assignment dashboard',
+          objectFit: 'cover',
+        },
+        {
+          src: tutorScreenshot2,
+          alt: 'Planning and guidance workflow in the software engineering tutor platform',
+          caption: 'Planning workflow',
+          objectFit: 'cover',
+        },
+        {
+          src: tutorScreenshot3,
+          alt: 'Code editor and hint interface in the software engineering tutor platform',
+          caption: 'Editor and hints',
+          objectFit: 'cover',
+        },
+        {
+          src: tutorScreenshot4,
+          alt: 'Integrated tutor interface showing assignment support tools',
+          caption: 'Integrated tutor view',
+          objectFit: 'cover',
+        },
+      ],
+    },
   },
   {
     id: 'lgame',
@@ -294,7 +326,7 @@ function ProjectSection({
         </div>
 
         <div className="lg:col-span-3 space-y-3">
-          {project.id === 'lgame' ? <LGameDemo /> : <DemoPlaceholder label={project.media?.demoLabel} />}
+          {project.id === 'lgame' ? <LGameDemo /> : project.media?.screenshots?.length ? null : <DemoPlaceholder label={project.media?.demoLabel} />}
           <div className="grid grid-cols-2 gap-3">
             {project.media?.screenshots?.length ? (
               project.media.screenshots.map((screenshot) => (
