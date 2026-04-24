@@ -6,7 +6,7 @@ const experiences = [
     company: 'E. & J. Gallo Winery',
     role: 'Capstone Team Lead',
     date: 'Aug 2025 – Dec 2025',
-    location: 'Modesto, CA',
+    location: 'Merced, CA',
   },
   {
     id: 'mimic',
@@ -17,7 +17,7 @@ const experiences = [
   },
   {
     id: 'sigmachi',
-    company: 'Sigma Chi Fraternity',
+    company: 'Sigma Chi Fraternity, Lambda Delta Chapter',
     role: 'Website Chairman',
     date: 'Dec 2024 – Jun 2025',
     location: 'Merced, CA',

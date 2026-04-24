@@ -4,19 +4,19 @@ const projects = [
   {
     id: 'macrotracker',
     title: 'macroTracker',
-    subtitle: 'Full-stack nutrition tracking PWA — logs meals from a single photo using computer vision and LLM analysis',
-    techStack: 'React / TypeScript / Supabase / Gemini API / OpenAI',
+    subtitle: 'AI nutrition tracking web app logs meals from a single photo using computer vision and LLM-based analysis.',
+    techStack: 'React / TypeScript / Supabase / Gemini API ',
   },
   {
     id: 'ai-tutor',
     title: 'AI-Assisted Software Engineering Tutor',
-    subtitle: 'LLM workflow that turns assignment prompts into learning goals, structured plans, and stepwise guidance — without revealing solutions',
-    techStack: 'React / Flask / PostgreSQL',
+    subtitle: 'Full-stack guided coding platform with an LLM workflow and in-browser Python IDE',
+    techStack: 'React / Flask / PostgreSQL / OpenAI API',
   },
   {
     id: 'lgame',
     title: 'L-Game with Optimal Game-Playing Agent',
-    subtitle: "Reimplementation of Edward de Bono's L-Game with a deterministic agent that selects optimal moves via state evaluation and search",
+    subtitle: "Python CLI reimplementation with PvP and CPU modes",
     techStack: 'Python',
   },
 ]
