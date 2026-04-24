@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import lGameCliImage from '../assets/projects/l-game-cli.png'
+import lGameCliImage from '../assets/projects/l-game-cli.jpg'
 import realLGameLayoutImage from '../assets/projects/real-l-game-layout.png'
 
 interface Project {
