@@ -5,6 +5,8 @@ interface ProjectCardProps {
   title: string
   subtitle: string
   techStack: string
+  thumbnailSrc?: string
+  thumbnailAlt?: string
   thumbnailPlaceholder?: string
   link?: string
   index: number
@@ -14,6 +16,8 @@ export default function ProjectCard({
   title,
   subtitle,
   techStack,
+  thumbnailSrc,
+  thumbnailAlt,
   thumbnailPlaceholder,
   link = '#',
   index,
@@ -90,22 +94,30 @@ export default function ProjectCard({
               border: '1px solid rgba(255, 255, 255, 0.08)',
             }}
           />
-          {/* Decorative icon or pattern */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div
-              className="w-8 h-8 lg:w-10 lg:h-10 transition-all duration-500"
-              style={{
-                opacity: isHovered ? 0.6 : 0.3,
-                color: isHovered ? '#c9a86c' : '#8a8a8a',
-              }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M3 9h18" />
-                <path d="M9 21V9" />
-              </svg>
+          {thumbnailSrc ? (
+            <img
+              src={thumbnailSrc}
+              alt={thumbnailAlt ?? `${title} thumbnail`}
+              className="absolute inset-0 h-full w-full"
+              style={{ objectFit: 'cover' }}
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div
+                className="w-8 h-8 lg:w-10 lg:h-10 transition-all duration-500"
+                style={{
+                  opacity: isHovered ? 0.6 : 0.3,
+                  color: isHovered ? '#c9a86c' : '#8a8a8a',
+                }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M3 9h18" />
+                  <path d="M9 21V9" />
+                </svg>
+              </div>
             </div>
-          </div>
+          )}
           {thumbnailPlaceholder && (
             <span className="absolute bottom-1 right-1 text-[10px] text-stone/50 font-mono">
               {thumbnailPlaceholder}

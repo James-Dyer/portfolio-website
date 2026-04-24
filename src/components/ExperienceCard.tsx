@@ -6,6 +6,8 @@ interface ExperienceCardProps {
   role: string
   date: string
   location: string
+  logoSrc?: string
+  logoAlt?: string
   index: number
   link?: string
 }
@@ -15,6 +17,8 @@ export default function ExperienceCard({
   role,
   date,
   location,
+  logoSrc,
+  logoAlt,
   index,
   link,
 }: ExperienceCardProps) {
@@ -87,22 +91,33 @@ export default function ExperienceCard({
               border: '1px solid rgba(255, 255, 255, 0.08)',
             }}
           />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div
-              className="w-7 h-7 lg:w-8 lg:h-8 transition-all duration-500"
-              style={{
-                opacity: isHovered ? 0.6 : 0.3,
-                color: isHovered ? '#c9a86c' : '#8a8a8a',
-              }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="2" y="7" width="20" height="14" rx="2" />
-                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-                <path d="M12 12v.01" />
-                <path d="M2 12h20" />
-              </svg>
+          {logoSrc ? (
+            <div className="absolute inset-0 flex items-center justify-center p-2 lg:p-3">
+              <img
+                src={logoSrc}
+                alt={logoAlt ?? `${company} logo`}
+                className="max-h-full max-w-full"
+                style={{ objectFit: 'contain' }}
+              />
             </div>
-          </div>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div
+                className="w-7 h-7 lg:w-8 lg:h-8 transition-all duration-500"
+                style={{
+                  opacity: isHovered ? 0.6 : 0.3,
+                  color: isHovered ? '#c9a86c' : '#8a8a8a',
+                }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                  <path d="M12 12v.01" />
+                  <path d="M2 12h20" />
+                </svg>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Text content */}

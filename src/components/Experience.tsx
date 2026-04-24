@@ -1,4 +1,7 @@
 import ExperienceCard from './ExperienceCard'
+import galloLogo from '../assets/experience-logos/gallo.svg'
+import lambdaDeltaLogo from '../assets/experience-logos/lambda-delta.svg'
+import mimicLogo from '../assets/experience-logos/mimic.svg'
 
 const experiences = [
   {
@@ -7,6 +10,8 @@ const experiences = [
     role: 'Capstone Team Lead',
     date: 'Aug 2025 – Dec 2025',
     location: 'Merced, CA',
+    logoSrc: galloLogo,
+    logoAlt: 'Gallo logo',
   },
   {
     id: 'mimic',
@@ -14,6 +19,8 @@ const experiences = [
     role: 'Software Engineering Intern',
     date: 'May 2025 – Aug 2025',
     location: 'Remote',
+    logoSrc: mimicLogo,
+    logoAlt: 'Mimic logo',
   },
   {
     id: 'sigmachi',
@@ -21,6 +28,8 @@ const experiences = [
     role: 'Web Developer',
     date: 'Dec 2024 – Jun 2025',
     location: 'Merced, CA',
+    logoSrc: lambdaDeltaLogo,
+    logoAlt: 'Lambda Delta chapter logo',
   },
 ]
 
@@ -49,6 +58,8 @@ export default function Experience({ mounted }: ExperienceProps) {
             role={exp.role}
             date={exp.date}
             location={exp.location}
+            logoSrc={exp.logoSrc}
+            logoAlt={exp.logoAlt}
             index={index}
             link={`/experience#${exp.id}`}
           />

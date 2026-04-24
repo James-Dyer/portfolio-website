@@ -3,8 +3,8 @@
 :root {
   --color-bg: #0c0c0c;
   --color-bg-card: #161616;
-  --color-text: #faf8f5;
-  --color-text-muted: #8a8a8a;
+  --color-text: #fdfcf9;
+  --color-text-muted: #969696;
   --color-accent: #ff6b6b;
   --color-accent-dim: rgba(255, 107, 107, 0.15);
   --color-border: rgba(255, 255, 255, 0.08);
@@ -17,8 +17,8 @@
 
   --color-ink: #0c0c0c;
   --color-card: #161616;
-  --color-cream: #faf8f5;
-  --color-stone: #8a8a8a;
+  --color-cream: #fdfcf9;
+  --color-stone: #969696;
   --color-gold: #c9a86c;
   --color-gold-dim: rgba(201, 168, 108, 0.15);
   --color-line: rgba(255, 255, 255, 0.08);
