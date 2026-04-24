@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import macrotrackerDemoVideo from '../assets/projects/macrotracker/demo-2x.mp4'
 import tutorScreenshot1 from '../assets/projects/ai-tutor/dashboard.png'
 import tutorScreenshot2 from '../assets/projects/ai-tutor/planning-workflow.png'
 import tutorScreenshot3 from '../assets/projects/ai-tutor/editor-and-hints.png'
@@ -13,6 +14,11 @@ interface Screenshot {
   alt: string
   caption: string
   objectFit?: 'contain' | 'cover'
+}
+
+interface ProjectVideo {
+  src: string
+  label: string
 }
 
 interface Project {
@@ -33,6 +39,7 @@ interface Project {
   results?: string | null
   media?: {
     demoLabel?: string
+    video?: ProjectVideo
     screenshots?: Screenshot[]
   }
 }
@@ -71,6 +78,12 @@ const projects: Project[] = [
     ],
     results:
       'Built and launched as a working full-stack PWA with an image pipeline that reduces upload sizes by 80–98% while keeping the meal logging flow fast enough for real-world use.',
+    media: {
+      video: {
+        src: macrotrackerDemoVideo,
+        label: 'macroTracker product walkthrough',
+      },
+    },
   },
   {
     id: 'ai-tutor',
@@ -83,8 +96,7 @@ const projects: Project[] = [
       'LLM workflow that transforms assignment prompts into learning goals, structured plans, and stepwise guidance',
       'In-browser Python IDE with dynamic hints tied to current code state and assignment constraints',
       'Full-stack React + Flask + PostgreSQL architecture for assignment and progress management',
-      'Guidance-first feedback flow designed to help students reason through solutions instead of receiving answers',
-      'Browser-based execution experience for iterative coding and feedback loops',
+      "UC Merced's full-stack web development class final project; one of 3 projects that received an A+",
     ],
     tech: ['React', 'Flask', 'PostgreSQL', 'Pyodide (WASM)', 'Monaco Editor', 'OpenAI API'],
     links: {
@@ -224,6 +236,23 @@ function ScreenshotPlaceholder() {
   )
 }
 
+function ProjectVideoPlayer({ src, label }: ProjectVideo) {
+  return (
+    <div className="flex min-h-[27.5rem] items-center justify-center lg:min-h-[32.5rem]">
+      <video
+        src={src}
+        className="block max-h-[27.5rem] w-auto max-w-full lg:max-h-[32.5rem]"
+        autoPlay
+        muted
+        loop
+        playsInline
+        controls
+        aria-label={label}
+      />
+    </div>
+  )
+}
+
 function ProjectScreenshot({
   src,
   alt,
@@ -273,6 +302,8 @@ function ProjectSection({
   isLast: boolean
   onOpenScreenshot: (screenshot: Screenshot) => void
 }) {
+  const usesSplitDescription = Boolean(project.media?.video)
+
   return (
     <section id={project.id} className="scroll-mt-20">
       {/* ── Project header ── */}
@@ -306,14 +337,21 @@ function ProjectSection({
         <div className="w-full h-px mb-6" style={{ background: `linear-gradient(90deg, ${SD(0.5)}, ${SD(0.08)})` }} />
 
         {/* Description */}
-        <p className="font-body text-base text-cream/70 leading-relaxed max-w-2xl mb-8">
-          {project.description}
-        </p>
+        {!usesSplitDescription && (
+          <p className="font-body text-base text-cream/70 leading-relaxed max-w-2xl mb-8">
+            {project.description}
+          </p>
+        )}
       </div>
 
       {/* ── Features + Demo ── */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-10">
         <div className="lg:col-span-2">
+          {usesSplitDescription && (
+            <p className="font-body text-base text-cream/70 leading-relaxed mb-8">
+              {project.description}
+            </p>
+          )}
           <SectionLabel>Key Features</SectionLabel>
           <ul className="space-y-3.5">
             {project.features.map((f, i) => (
@@ -326,26 +364,34 @@ function ProjectSection({
         </div>
 
         <div className="lg:col-span-3 space-y-3">
-          {project.id === 'lgame' ? <LGameDemo /> : project.media?.screenshots?.length ? null : <DemoPlaceholder label={project.media?.demoLabel} />}
-          <div className="grid grid-cols-2 gap-3">
-            {project.media?.screenshots?.length ? (
-              project.media.screenshots.map((screenshot) => (
-                <ProjectScreenshot
-                  key={screenshot.src}
-                  src={screenshot.src}
-                  alt={screenshot.alt}
-                  caption={screenshot.caption}
-                  objectFit={screenshot.objectFit}
-                  onOpen={() => onOpenScreenshot(screenshot)}
-                />
-              ))
-            ) : (
-              <>
-                <ScreenshotPlaceholder />
-                <ScreenshotPlaceholder />
-              </>
-            )}
-          </div>
+          {project.id === 'lgame' ? (
+            <LGameDemo />
+          ) : project.media?.video ? (
+            <ProjectVideoPlayer src={project.media.video.src} label={project.media.video.label} />
+          ) : (
+            <>
+              {project.media?.screenshots?.length ? null : <DemoPlaceholder label={project.media?.demoLabel} />}
+              <div className="grid grid-cols-2 gap-3">
+                {project.media?.screenshots?.length ? (
+                  project.media.screenshots.map((screenshot) => (
+                    <ProjectScreenshot
+                      key={screenshot.src}
+                      src={screenshot.src}
+                      alt={screenshot.alt}
+                      caption={screenshot.caption}
+                      objectFit={screenshot.objectFit}
+                      onOpen={() => onOpenScreenshot(screenshot)}
+                    />
+                  ))
+                ) : (
+                  <>
+                    <ScreenshotPlaceholder />
+                    <ScreenshotPlaceholder />
+                  </>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
 
