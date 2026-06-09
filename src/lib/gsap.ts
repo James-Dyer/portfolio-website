@@ -4,4 +4,4 @@ import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 
 gsap.registerPlugin(useGSAP, ScrambleTextPlugin)
 
-export { gsap, ScrambleTextPlugin, useGSAP }
+export { gsap, useGSAP }

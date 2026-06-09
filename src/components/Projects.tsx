@@ -1,11 +1,11 @@
 import { projects } from '../data/portfolio'
 import ProjectCard from './ProjectCard'
 
-export default function Projects({ mounted }: { mounted: boolean }) {
+export default function Projects() {
   return (
     <section id="projects" className="relative z-10 w-full max-w-2xl lg:max-w-3xl xl:max-w-3xl mr-auto px-4 lg:px-8 xl:px-10 pb-24 lg:pb-32">
       <div className="mb-4 lg:mb-6">
-        <h2 className={`font-display text-6xl lg:text-7xl text-cream font-medium tracking-tight ${mounted ? 'animate-slide-up delay-600' : 'opacity-0'}`}>Recent <span className="italic text-gold">Projects</span></h2>
+        <h2 className="font-display text-6xl lg:text-7xl text-cream font-medium tracking-tight animate-slide-up delay-600">Recent <span className="italic text-gold">Projects</span></h2>
       </div>
       <div className="space-y-1.5 lg:space-y-2">
         {projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}

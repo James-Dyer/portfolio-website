@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface Shape {
   x: number; y: number; baseX: number; baseY: number; vx: number; vy: number
@@ -32,17 +32,26 @@ function createShapes() {
 }
 
 export default function MagneticShapes() {
-  const [shapes] = useState(createShapes)
+  const shapes = useRef<Shape[]>(createShapes())
   const shapeRefs = useRef<(HTMLDivElement | null)[]>([])
   const mouse = useRef({ x: 0, y: 0, active: false })
+  const dims = useRef({ w: window.innerWidth, h: window.innerHeight })
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let frame = 0
     const onMove = (event: PointerEvent) => { mouse.current = { x: event.clientX, y: event.clientY, active: true } }
     const onLeave = () => { mouse.current.active = false }
+    const onResize = () => {
+      const { w, h } = dims.current
+      shapes.current.forEach(s => {
+        s.baseX = (s.baseX / w) * window.innerWidth
+        s.baseY = (s.baseY / h) * window.innerHeight
+      })
+      dims.current = { w: window.innerWidth, h: window.innerHeight }
+    }
     const animate = () => {
-      shapes.forEach((shape, index) => {
+      shapes.current.forEach((shape, index) => {
         if (mouse.current.active) {
           const dx = mouse.current.x - shape.x
           const dy = mouse.current.y - shape.y
@@ -50,7 +59,11 @@ export default function MagneticShapes() {
           if (distance < 300) {
             const force = (1 - distance / 300) * shape.strength
             const angle = Math.atan2(dy, dx)
-            const direction = shape.behavior === 'attract' ? 2 : shape.behavior === 'repel' ? -3 : shape.behavior === 'shy' && distance < 150 ? -5 : 0
+            const direction = shape.behavior === 'attract' ? 2
+              : shape.behavior === 'repel' ? -3
+              : shape.behavior === 'orbit' ? 0.3
+              : shape.behavior === 'shy' && distance < 150 ? -5
+              : 0
             shape.vx += Math.cos(angle) * force * direction
             shape.vy += Math.sin(angle) * force * direction
             if (shape.behavior === 'orbit') {
@@ -71,17 +84,19 @@ export default function MagneticShapes() {
     }
     window.addEventListener('pointermove', onMove)
     window.addEventListener('pointerleave', onLeave)
+    window.addEventListener('resize', onResize)
     frame = requestAnimationFrame(animate)
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerleave', onLeave)
+      window.removeEventListener('resize', onResize)
     }
-  }, [shapes])
+  }, [])
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }} aria-hidden="true">
-      {shapes.map((shape, index) => (
+      {shapes.current.map((shape, index) => (
         <div
           key={index}
           ref={(element) => { shapeRefs.current[index] = element }}

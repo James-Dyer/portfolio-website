@@ -1,32 +1,14 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Experience } from '../data/portfolio'
-import { gsap, useGSAP } from '../lib/gsap'
+import { useTiltCard } from '../hooks/useTiltCard'
 
 export default function ExperienceCard({ experience, index }: { experience: Experience; index: number }) {
   const [hovered, setHovered] = useState(false)
   const card = useRef<HTMLAnchorElement>(null)
   const glow = useRef<HTMLDivElement>(null)
 
-  useGSAP(() => {
-    if (!card.current || window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return
-    const xTo = gsap.quickTo(card.current, 'rotationY', { duration: 0.2, ease: 'power2.out' })
-    const yTo = gsap.quickTo(card.current, 'rotationX', { duration: 0.2, ease: 'power2.out' })
-    const onMove = (event: PointerEvent) => {
-      const rect = card.current!.getBoundingClientRect()
-      const x = (event.clientX - rect.left) / rect.width - 0.5
-      const y = (event.clientY - rect.top) / rect.height - 0.5
-      xTo(x * 6); yTo(y * -6)
-      glow.current?.style.setProperty('background', `radial-gradient(circle at ${(x + .5) * 100}% ${(y + .5) * 100}%, rgba(201,168,108,.12), transparent 50%)`)
-    }
-    const onLeave = () => { xTo(0); yTo(0) }
-    card.current.addEventListener('pointermove', onMove)
-    card.current.addEventListener('pointerleave', onLeave)
-    return () => {
-      card.current?.removeEventListener('pointermove', onMove)
-      card.current?.removeEventListener('pointerleave', onLeave)
-    }
-  }, { scope: card })
+  useTiltCard(card, glow)
 
   return (
     <Link ref={card} to={`/experience#${experience.id}`} className="group relative block rounded-xl overflow-hidden transition-all duration-500 animate-slide-up" style={{ animationDelay: `${700 + index * 100}ms`, perspective: 1000, transformStyle: 'preserve-3d' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>

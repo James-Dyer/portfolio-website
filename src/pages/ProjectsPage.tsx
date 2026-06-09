@@ -6,7 +6,7 @@ import { projects, type Project, type Screenshot } from '../data/portfolio'
 
 function ProjectMedia({ project, onOpen }: { project: Project; onOpen: (screenshot: Screenshot) => void }) {
   if (project.media === 'video') {
-    return <div className="flex max-h-[34rem] justify-center overflow-hidden rounded-lg border border-white/[0.08] bg-card"><video src={project.heroMedia} className="max-h-[34rem] max-w-full" autoPlay muted loop playsInline controls aria-label="macroTracker product walkthrough" /></div>
+    return <div className="flex max-h-[34rem] justify-center overflow-hidden rounded-lg border border-white/[0.08] bg-card"><video src={project.heroMedia} className="max-h-[34rem] max-w-full" autoPlay muted loop playsInline controls aria-label={`${project.title} product walkthrough`} /></div>
   }
   if (project.media === 'demo') return <div className="overflow-hidden rounded-lg border border-white/[0.08]"><LGameDemo /></div>
   const [primary, ...secondary] = project.screenshots ?? []
@@ -29,7 +29,7 @@ function ProjectSection({ project, onOpen }: { project: Project; onOpen: (screen
           <div className="mt-5 border-y border-white/[0.08] py-3"><span className="font-sans text-[10px] uppercase tracking-[0.14em] text-stone">Signal outcome</span><strong className="mt-1 block font-sans text-sm font-medium text-gold">{project.outcome}</strong></div>
           <ul className="mt-7 space-y-3">{project.highlights.map((item) => <li key={item} className="flex gap-3 font-body text-sm leading-relaxed text-cream/75"><span className="mt-2 h-1 w-1 flex-none rounded-full bg-gold" /><span>{item}</span></li>)}</ul>
           <div className="mt-7 flex flex-wrap gap-x-3 gap-y-2">{project.tech.map((item) => <span key={item} className="font-sans text-xs text-stone">{item}</span>)}</div>
-          <div className="mt-7 flex flex-wrap gap-4"><a href={project.links.github} target="_blank" rel="noreferrer" className="font-sans text-sm font-medium text-gold transition-colors hover:text-cream">GitHub ↗</a>{project.links.live && <a href={project.links.live} target="_blank" rel="noreferrer" className="font-sans text-sm font-medium text-gold transition-colors hover:text-cream">{project.links.liveLabel ?? 'Live site'} ↗</a>}</div>
+          <div className="mt-7 flex flex-wrap gap-4"><a href={project.links.github} target="_blank" rel="noopener noreferrer" className="font-sans text-sm font-medium text-gold transition-colors hover:text-cream">GitHub ↗</a>{project.links.live && <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="font-sans text-sm font-medium text-gold transition-colors hover:text-cream">{project.links.liveLabel ?? 'Live site'} ↗</a>}</div>
         </div>
         <ProjectMedia project={project} onOpen={onOpen} />
       </div>

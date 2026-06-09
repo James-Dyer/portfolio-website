@@ -35,7 +35,6 @@ function RouteSignal() {
 
 function HomePage() {
   const root = useRef<HTMLDivElement>(null)
-  const mounted = true
 
   useGSAP(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -71,7 +70,7 @@ function HomePage() {
 
       <div className="relative z-10 flex flex-col lg:flex-row lg:pl-16 xl:pl-28">
         <div className="lg:w-[40%] xl:w-[35%] lg:sticky lg:top-0 lg:h-screen flex items-start justify-center px-4 lg:px-8 xl:px-10 py-8 lg:py-12 pb-12">
-          <div className={`card-glow bg-cream rounded-2xl p-8 pb-20 lg:p-12 lg:pb-24 w-full max-w-md relative overflow-hidden ${mounted ? 'animate-scale-in delay-200' : 'opacity-0'}`}>
+          <div className="card-glow bg-cream rounded-2xl p-8 pb-20 lg:p-12 lg:pb-24 w-full max-w-md relative overflow-hidden animate-scale-in delay-200">
             <div className="absolute top-4 left-4 w-8 h-8 pointer-events-none"><div className="absolute top-0 left-0 w-full h-0.5 bg-gold/40" /><div className="absolute top-0 left-0 w-0.5 h-full bg-gold/40" /></div>
             <div className="absolute top-4 right-4 w-8 h-8 pointer-events-none"><div className="absolute top-0 right-0 w-full h-0.5 bg-gold/40" /><div className="absolute top-0 right-0 w-0.5 h-full bg-gold/40" /></div>
             <div className="absolute bottom-4 left-4 w-8 h-8 pointer-events-none"><div className="absolute bottom-0 left-0 w-full h-0.5 bg-gold/40" /><div className="absolute bottom-0 left-0 w-0.5 h-full bg-gold/40" /></div>
@@ -100,20 +99,20 @@ function HomePage() {
         <div className="lg:w-[60%] xl:w-[65%] flex flex-col">
           <section className="min-h-screen flex flex-col justify-start px-4 lg:px-8 xl:px-10 pt-12 lg:pt-16 pb-10">
             <div className="mt-0">
-              <h1 className={`font-display text-cream leading-[0.85] tracking-tight mb-10 ${mounted ? 'animate-slide-up delay-400' : 'opacity-0'}`}>
+              <h1 className="font-display text-cream leading-[0.85] tracking-tight mb-10 animate-slide-up delay-400">
                 <span className="block text-[clamp(4rem,9vw,8.5rem)] font-medium">Software <br className="hidden sm:block" /> <span className="italic text-gold">Engineer</span></span>
               </h1>
-              <p className={`hero-intro font-body text-stone text-lg lg:text-xl max-w-xl leading-relaxed ${mounted ? 'animate-slide-up delay-500' : 'opacity-0'}`}>
+              <p className="hero-intro font-body text-stone text-lg lg:text-xl max-w-xl leading-relaxed animate-slide-up delay-500">
                 Crafting elegant solutions at the intersection of <span className="hero-highlight text-cream">systems programming</span>, <span className="hero-highlight text-cream">cloud infrastructure</span>, and <span className="hero-highlight text-cream">full-stack development</span>.
               </p>
-              <div className={`hero-actions mt-8 flex flex-wrap items-center gap-5 ${mounted ? 'animate-slide-up delay-600' : 'opacity-0'}`}>
+              <div className="hero-actions mt-8 flex flex-wrap items-center gap-5 animate-slide-up delay-600">
                 <a className="system-action" href="#projects">Explore selected work <span>↓</span></a>
                 <a className="text-action" href="mailto:james.dyer.dyer@gmail.com">Start a conversation ↗</a>
               </div>
             </div>
           </section>
-          <Projects mounted={mounted} />
-          <Experience mounted={mounted} />
+          <Projects />
+          <Experience />
         </div>
       </div>
     </div>
