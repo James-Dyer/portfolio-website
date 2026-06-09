@@ -54,7 +54,7 @@ export const projects: Project[] = [
     title: 'macroTracker',
     subtitle: 'AI nutrition tracking PWA',
     summary: 'A mobile-first nutrition tracker that turns meal photos into structured macro data.',
-    outcome: '80–98% smaller image uploads',
+    outcome: 'Live full-stack product serving real users',
     highlights: [
       'Built a full-stack React and TypeScript PWA with Supabase-backed storage and PostgreSQL persistence.',
       'Reduced image upload sizes by 80–98% with a client-side compression pipeline.',

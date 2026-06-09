@@ -2,9 +2,7 @@ import type { ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 interface DetailPageLayoutProps {
-  eyebrow: string
   title: string
-  introduction: string
   children: ReactNode
 }
 
@@ -14,9 +12,7 @@ const navItems = [
 ]
 
 export default function DetailPageLayout({
-  eyebrow,
   title,
-  introduction,
   children,
 }: DetailPageLayoutProps) {
   const location = useLocation()
@@ -43,9 +39,8 @@ export default function DetailPageLayout({
                   key={item.to}
                   to={item.to}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`font-sans text-sm transition-colors ${
-                    isActive ? 'text-cream' : 'text-stone hover:text-cream'
-                  }`}
+                  className={`font-sans text-sm transition-colors ${isActive ? 'text-cream' : 'text-stone hover:text-cream'
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -57,17 +52,9 @@ export default function DetailPageLayout({
 
       <main className="mx-auto max-w-5xl px-5 pb-24 sm:px-8 lg:pb-32">
         <header className="max-w-3xl border-b border-white/[0.08] pb-10 pt-14 sm:pb-14 sm:pt-20">
-          <p className="mb-3 font-sans text-xs font-medium uppercase tracking-[0.16em] text-gold">
-            {eyebrow}
-          </p>
           <h1 className="font-display text-5xl font-medium tracking-tight text-cream sm:text-7xl">
             {title}
           </h1>
-          {introduction && (
-            <p className="mt-5 max-w-2xl font-body text-base leading-relaxed text-stone sm:text-lg">
-              {introduction}
-            </p>
-          )}
         </header>
 
         {children}

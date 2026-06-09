@@ -24,7 +24,6 @@ function ProjectSection({ project, onOpen }: { project: Project; onOpen: (screen
     <section id={project.id} className="scroll-mt-24 border-b border-white/[0.08] py-14 last:border-0 sm:py-20">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
         <div>
-          <p className="mb-2 font-sans text-xs font-medium uppercase tracking-[0.14em] text-gold">{project.subtitle}</p>
           <h2 className="font-display text-4xl font-medium tracking-tight text-cream sm:text-5xl">{project.title}</h2>
           <p className="mt-4 font-body text-base leading-relaxed text-stone">{project.summary}</p>
           <div className="mt-5 border-y border-white/[0.08] py-3"><span className="font-sans text-[10px] uppercase tracking-[0.14em] text-stone">Signal outcome</span><strong className="mt-1 block font-sans text-sm font-medium text-gold">{project.outcome}</strong></div>
@@ -54,7 +53,7 @@ export default function ProjectsPage() {
     return () => { document.body.style.overflow = previous; window.removeEventListener('keydown', onKey) }
   }, [selected])
   return (
-    <DetailPageLayout eyebrow="Selected work" title="Projects" introduction="">
+    <DetailPageLayout title="Projects">
       {projects.map((project) => <ProjectSection key={project.id} project={project} onOpen={setSelected} />)}
       {selected && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/95 p-4 sm:p-8" onClick={() => setSelected(null)}><button type="button" onClick={() => setSelected(null)} className="absolute right-5 top-5 font-sans text-2xl text-cream transition-colors hover:text-gold" aria-label="Close fullscreen image">×</button><figure className="max-w-6xl" onClick={(event) => event.stopPropagation()}><img src={selected.src} alt={selected.alt} className="max-h-[84vh] w-full rounded-md object-contain" /><figcaption className="mt-3 text-center font-sans text-xs text-stone">{selected.caption}</figcaption></figure></div>}
     </DetailPageLayout>

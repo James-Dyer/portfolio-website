@@ -24,5 +24,5 @@ export default function ExperiencePage() {
     const timer = window.setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
     return () => window.clearTimeout(timer)
   }, [location.hash])
-  return <DetailPageLayout eyebrow="Professional history" title="Experience" introduction="Roles where I have led teams, built production systems, and improved the infrastructure behind reliable software.">{experiences.map((experience) => <ExperienceSection key={experience.id} experience={experience} />)}</DetailPageLayout>
+  return <DetailPageLayout title="Experience">{experiences.map((experience) => <ExperienceSection key={experience.id} experience={experience} />)}</DetailPageLayout>
 }
