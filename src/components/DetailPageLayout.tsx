@@ -63,9 +63,11 @@ export default function DetailPageLayout({
           <h1 className="font-display text-5xl font-medium tracking-tight text-cream sm:text-7xl">
             {title}
           </h1>
-          <p className="mt-5 max-w-2xl font-body text-base leading-relaxed text-stone sm:text-lg">
-            {introduction}
-          </p>
+          {introduction && (
+            <p className="mt-5 max-w-2xl font-body text-base leading-relaxed text-stone sm:text-lg">
+              {introduction}
+            </p>
+          )}
         </header>
 
         {children}

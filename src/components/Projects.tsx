@@ -1,65 +1,14 @@
+import { projects } from '../data/portfolio'
 import ProjectCard from './ProjectCard'
-import tutorThumbnail from '../assets/project-thumbnails/software-engineering-tutor-card.jpg'
-import lGameThumbnail from '../assets/projects/real-l-game-layout.png'
-import macrotrackerThumbnail from '../assets/project-thumbnails/macrotracker-card.jpg'
 
-const projects = [
-  {
-    id: 'macrotracker',
-    title: 'macroTracker',
-    subtitle: 'AI nutrition tracking web app logs meals from a single photo using computer vision and LLM-based analysis.',
-    techStack: 'React / TypeScript / Supabase / Gemini API ',
-    thumbnailSrc: macrotrackerThumbnail,
-    thumbnailAlt: 'macroTracker mobile app thumbnail',
-  },
-  {
-    id: 'ai-tutor',
-    title: 'Software Engineering Tutor',
-    subtitle: 'Guided coding platform with an LLM workflow and in-browser Python IDE',
-    techStack: 'React / Flask / PostgreSQL / OpenAI API',
-    thumbnailSrc: tutorThumbnail,
-    thumbnailAlt: 'Software Engineering Tutor dashboard thumbnail',
-  },
-  {
-    id: 'lgame',
-    title: 'L-Game',
-    subtitle: "Python CLI reimplementation with PvP and CPU modes",
-    techStack: 'Python',
-    thumbnailSrc: lGameThumbnail,
-    thumbnailAlt: 'L-Game board layout thumbnail',
-  },
-]
-
-interface ProjectsProps {
-  mounted: boolean
-}
-
-export default function Projects({ mounted }: ProjectsProps) {
+export default function Projects({ mounted }: { mounted: boolean }) {
   return (
-    <section className="relative z-10 w-full max-w-2xl lg:max-w-3xl xl:max-w-3xl mr-auto px-4 lg:px-8 xl:px-10 pb-24 lg:pb-32">
-      {/* Section header */}
+    <section id="projects" className="relative z-10 w-full max-w-2xl lg:max-w-3xl xl:max-w-3xl mr-auto px-4 lg:px-8 xl:px-10 pb-24 lg:pb-32">
       <div className="mb-4 lg:mb-6">
-        <h2
-          className={`font-display text-6xl lg:text-7xl text-cream font-medium tracking-tight ${mounted ? 'animate-slide-up delay-600' : 'opacity-0'}`}
-        >
-          Recent <span className="italic text-gold">Projects</span>
-        </h2>
+        <h2 className={`font-display text-6xl lg:text-7xl text-cream font-medium tracking-tight ${mounted ? 'animate-slide-up delay-600' : 'opacity-0'}`}>Recent <span className="italic text-gold">Projects</span></h2>
       </div>
-
-      {/* Projects list */}
       <div className="space-y-1.5 lg:space-y-2">
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={project.id}
-            title={project.title}
-            subtitle={project.subtitle}
-            techStack={project.techStack}
-            thumbnailSrc={project.thumbnailSrc}
-            thumbnailAlt={project.thumbnailAlt}
-            link={`/projects#${project.id}`}
-            index={index}
-          />
-        ))}
+        {projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}
       </div>
     </section>
   )
