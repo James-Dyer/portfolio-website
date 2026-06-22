@@ -79,7 +79,7 @@ export const projects: Project[] = [
     highlights: [
       ‘Designed an LLM workflow that transformed assignment prompts into personalized learning objectives, implementation plans, and stepwise guidance.’,
       ‘Built an in-browser Python IDE with dynamic hint generation based on code state and assignment constraints.’,
-      ‘Delivered one of three A+ final projects in UC Merced’s full-stack web development course.’,
+      "Delivered one of three A+ final projects in UC Merced’s full-stack web development course.",
     ],
     tech: ['React', 'Flask', 'PostgreSQL', 'Pyodide', 'Monaco Editor', 'OpenAI API'],
     thumbnailSrc: tutorThumbnail,
