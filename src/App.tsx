@@ -43,7 +43,7 @@ function HomePage() {
     const originalMarkup = intro.innerHTML
     gsap.to(intro, {
       scrambleText: {
-        text: 'Crafting elegant solutions at the intersection of systems programming, cloud infrastructure, and full-stack development.',
+        text: 'Crafting production-grade systems across backend engineering, cloud infrastructure, and applied AI development.',
         chars: '01/.',
       },
       delay: 0.45,
@@ -103,7 +103,7 @@ function HomePage() {
                 <span className="block text-[clamp(4rem,9vw,8.5rem)] font-medium">Software <br className="hidden sm:block" /> <span className="italic text-gold">Engineer</span></span>
               </h1>
               <p className="hero-intro font-body text-stone text-lg lg:text-xl max-w-xl leading-relaxed animate-slide-up delay-500">
-                Crafting elegant solutions at the intersection of <span className="hero-highlight text-cream">systems programming</span>, <span className="hero-highlight text-cream">cloud infrastructure</span>, and <span className="hero-highlight text-cream">full-stack development</span>.
+                Crafting production-grade systems across <span className="hero-highlight text-cream">backend engineering</span>, <span className="hero-highlight text-cream">cloud infrastructure</span>, and <span className="hero-highlight text-cream">applied AI development</span>.
               </p>
               <div className="hero-actions mt-8 flex flex-wrap items-center gap-5 animate-slide-up delay-600">
                 <a className="system-action" href="#projects">Explore selected work <span>↓</span></a>

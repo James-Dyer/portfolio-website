@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 interface Shape {
   x: number; y: number; baseX: number; baseY: number; vx: number; vy: number
@@ -32,7 +32,7 @@ function createShapes() {
 }
 
 export default function MagneticShapes() {
-  const shapes = useRef<Shape[]>(createShapes())
+  const shapes = useMemo(() => createShapes(), [])
   const shapeRefs = useRef<(HTMLDivElement | null)[]>([])
   const mouse = useRef({ x: 0, y: 0, active: false })
   const dims = useRef({ w: window.innerWidth, h: window.innerHeight })
@@ -44,14 +44,14 @@ export default function MagneticShapes() {
     const onLeave = () => { mouse.current.active = false }
     const onResize = () => {
       const { w, h } = dims.current
-      shapes.current.forEach(s => {
+      shapes.forEach(s => {
         s.baseX = (s.baseX / w) * window.innerWidth
         s.baseY = (s.baseY / h) * window.innerHeight
       })
       dims.current = { w: window.innerWidth, h: window.innerHeight }
     }
     const animate = () => {
-      shapes.current.forEach((shape, index) => {
+      shapes.forEach((shape, index) => {
         if (mouse.current.active) {
           const dx = mouse.current.x - shape.x
           const dy = mouse.current.y - shape.y
@@ -92,11 +92,11 @@ export default function MagneticShapes() {
       window.removeEventListener('pointerleave', onLeave)
       window.removeEventListener('resize', onResize)
     }
-  }, [])
+  }, [shapes])
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }} aria-hidden="true">
-      {shapes.current.map((shape, index) => (
+      {shapes.map((shape, index) => (
         <div
           key={index}
           ref={(element) => { shapeRefs.current[index] = element }}
