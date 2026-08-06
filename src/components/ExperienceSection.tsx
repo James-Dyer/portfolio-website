@@ -9,7 +9,7 @@ export default function ExperienceSection({ experience }: { experience: Experien
       </div>
       <p className="mt-6 max-w-3xl font-body text-base leading-relaxed text-stone">{experience.summary}</p>
       <ul className="mt-6 max-w-3xl space-y-3">{experience.highlights.map((item) => <li key={item} className="flex gap-3 font-body text-sm leading-relaxed text-cream/75"><span className="mt-2 h-1 w-1 flex-none rounded-full bg-gold" /><span>{item}</span></li>)}</ul>
-      <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">{experience.tech.map((item) => <span key={item} className="font-sans text-xs text-stone">{item}</span>)}{experience.website && <a href={experience.website} target="_blank" rel="noopener noreferrer" className="font-sans text-xs font-medium text-gold transition-colors hover:text-cream">Live site ↗</a>}</div>
+      <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">{experience.tech.map((item) => <span key={item} className="font-sans text-xs text-stone">{item}</span>)}{experience.website && <a href={experience.website} target="_blank" rel="noopener noreferrer" className="font-sans text-xs font-medium text-gold transition-colors hover:text-cream">{experience.websiteLabel ?? 'Live site'} ↗</a>}</div>
     </section>
   )
 }

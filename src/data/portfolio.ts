@@ -46,6 +46,7 @@ export interface Experience {
   tech: string[]
   logoSrc: string
   website?: string
+  websiteLabel?: string
 }
 
 export const projects: Project[] = [
@@ -166,5 +167,6 @@ export const additionalExperiences: Experience[] = [
     tech: ['React', 'JavaScript', 'GitHub Pages', 'Spreadsheet integration'],
     logoSrc: lambdaDeltaLogo,
     website: 'https://james-dyer.github.io/lambda-delta-chapter-website/',
+    websiteLabel: 'Archived site',
   },
 ]
