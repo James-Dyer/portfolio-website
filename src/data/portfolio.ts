@@ -6,9 +6,9 @@ import tutorDashboard from '../assets/projects/ai-tutor/dashboard.png'
 import tutorPlanning from '../assets/projects/ai-tutor/planning-workflow.png'
 import tutorEditor from '../assets/projects/ai-tutor/editor-and-hints.png'
 import tutorIntegrated from '../assets/projects/ai-tutor/integrated-tutor-view.png'
-import galloLogo from '../assets/experience-logos/gallo.svg'
 import lambdaDeltaLogo from '../assets/experience-logos/lambda-delta.svg'
 import mimicLogo from '../assets/experience-logos/mimic.svg'
+import partScan from '../assets/projects/part-scan/part-scan.jpeg'
 
 export interface Screenshot {
   src: string
@@ -27,7 +27,7 @@ export interface Project {
   thumbnailSrc: string
   heroMedia?: string
   links: {
-    github: string
+    github?: string
     live?: string
     liveLabel?: string
   }
@@ -49,6 +49,26 @@ export interface Experience {
 }
 
 export const projects: Project[] = [
+  {
+    id: 'inspection-system',
+    title: 'Computer Vision Inspection System',
+    subtitle: 'Industry-sponsored factory wear measurement',
+    summary: 'A computer vision system that measures factory part wear from standard camera hardware, replacing a manual inspection process with a repeatable, data-driven workflow.',
+    outcome: 'Led a 5-person industry-sponsored team',
+    highlights: [
+      'Led a 5-person industry-sponsored team in developing a computer vision system that measured factory part wear with less than 0.5 mm error, transforming a manual inspection process into a repeatable data-driven workflow.',
+      'Designed an OpenCV calibration pipeline that converted image coordinates into real-world measurements, enabling accurate wear analysis from standard camera hardware.',
+      'Developed the primary operator-facing desktop application, integrating camera controls and inspection record retrieval into a single workflow for factory users.',
+      'Owned DevOps infrastructure, implementing CI pipelines and 29 automated tests to improve reliability and prevent regressions.',
+    ],
+    tech: ['OpenCV', 'Python', 'React', 'Electron', 'AWS', 'CI/CD'],
+    thumbnailSrc: partScan,
+    links: {},
+    media: 'screenshots',
+    screenshots: [
+      { src: partScan, alt: 'Scanning rig', caption: 'Scanning rig' }
+    ],
+  },
   {
     id: 'macrotracker',
     title: 'macroTracker',
@@ -114,22 +134,6 @@ export const projects: Project[] = [
 
 export const experiences: Experience[] = [
   {
-    id: 'gallo',
-    company: 'E. & J. Gallo Winery',
-    role: 'Capstone Team Lead',
-    duration: 'Aug 2025 – Dec 2025',
-    location: 'Merced, CA',
-    summary: 'Led a five-person industry-sponsored team delivering a computer vision system that measured factory part wear with less than 0.5 mm error.',
-    highlights: [
-      'Transformed a manual inspection process into a repeatable data-driven workflow by leading all phases of delivery across a five-person team.',
-      'Designed an OpenCV calibration pipeline that converted image coordinates into real-world measurements, enabling accurate wear analysis from standard camera hardware.',
-      'Developed the primary operator-facing desktop application, integrating camera controls and inspection record retrieval into a single workflow for factory users.',
-      'Owned DevOps infrastructure, implementing CI pipelines and 29 automated tests to improve reliability and prevent regressions.',
-    ],
-    tech: ['React', 'Electron', 'OpenCV', 'Python', 'AWS', 'CI/CD'],
-    logoSrc: galloLogo,
-  },
-  {
     id: 'mimic',
     company: 'Mimic Ransomware Defense',
     role: 'Software Engineering Intern',
@@ -145,6 +149,9 @@ export const experiences: Experience[] = [
     logoSrc: mimicLogo,
     website: 'https://mimic.com',
   },
+]
+
+export const additionalExperiences: Experience[] = [
   {
     id: 'sigmachi',
     company: 'Sigma Chi Fraternity, Lambda Delta Chapter',
@@ -158,5 +165,6 @@ export const experiences: Experience[] = [
     ],
     tech: ['React', 'JavaScript', 'GitHub Pages', 'Spreadsheet integration'],
     logoSrc: lambdaDeltaLogo,
+    website: 'https://james-dyer.github.io/lambda-delta-chapter-website/',
   },
 ]

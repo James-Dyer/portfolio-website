@@ -1,9 +1,11 @@
 import { useRef } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import AdditionalExperience from './components/AdditionalExperience'
 import Experience from './components/Experience'
 import MagneticShapes from './components/MagneticShapes'
 import Projects from './components/Projects'
 import { gsap, useGSAP } from './lib/gsap'
+import AdditionalExperiencePage from './pages/AdditionalExperiencePage'
 import ExperiencePage from './pages/ExperiencePage'
 import ProjectsPage from './pages/ProjectsPage'
 
@@ -113,6 +115,7 @@ function HomePage() {
           </section>
           <Projects />
           <Experience />
+          <AdditionalExperience />
         </div>
       </div>
     </div>
@@ -120,5 +123,5 @@ function HomePage() {
 }
 
 export default function App() {
-  return <><RouteSignal /><Routes><Route path="/" element={<HomePage />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/experience" element={<ExperiencePage />} /></Routes></>
+  return <><RouteSignal /><Routes><Route path="/" element={<HomePage />} /><Route path="/projects" element={<ProjectsPage />} /><Route path="/experience" element={<ExperiencePage />} /><Route path="/additional-experience" element={<AdditionalExperiencePage />} /></Routes></>
 }

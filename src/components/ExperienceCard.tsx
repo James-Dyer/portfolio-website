@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import type { Experience } from '../data/portfolio'
 import { useTiltCard } from '../hooks/useTiltCard'
 
-export default function ExperienceCard({ experience, index }: { experience: Experience; index: number }) {
+export default function ExperienceCard({ experience, index, basePath = '/experience' }: { experience: Experience; index: number; basePath?: string }) {
   const [hovered, setHovered] = useState(false)
   const card = useRef<HTMLAnchorElement>(null)
   const glow = useRef<HTMLDivElement>(null)
@@ -11,7 +11,7 @@ export default function ExperienceCard({ experience, index }: { experience: Expe
   useTiltCard(card, glow)
 
   return (
-    <Link ref={card} to={`/experience#${experience.id}`} className="group relative block rounded-xl overflow-hidden transition-all duration-500 animate-slide-up" style={{ animationDelay: `${700 + index * 100}ms`, perspective: 1000, transformStyle: 'preserve-3d' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <Link ref={card} to={`${basePath}#${experience.id}`} className="group relative block rounded-xl overflow-hidden transition-all duration-500 animate-slide-up" style={{ animationDelay: `${700 + index * 100}ms`, perspective: 1000, transformStyle: 'preserve-3d' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="absolute inset-0 rounded-xl transition-all duration-500" style={{ background: hovered ? 'linear-gradient(135deg,rgba(201,168,108,.08),rgba(22,22,22,.95) 55%,rgba(22,22,22,.98))' : 'transparent', border: hovered ? '1px solid rgba(201,168,108,.3)' : '1px solid transparent', boxShadow: hovered ? '0 20px 40px -15px rgba(0,0,0,.5)' : 'none' }} />
       <div ref={glow} className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-500" style={{ opacity: hovered ? 1 : 0 }} />
       <div className="relative flex items-stretch p-4 lg:p-5 gap-5">
