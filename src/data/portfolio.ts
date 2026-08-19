@@ -57,10 +57,10 @@ export const projects: Project[] = [
     summary: 'A computer vision system that measures factory part wear from standard camera hardware, replacing a manual inspection process with a repeatable, data-driven workflow.',
     outcome: 'Led a 5-person industry-sponsored team',
     highlights: [
-      'Led a 5-person industry-sponsored team in developing a computer vision system that measured factory part wear with less than 0.5 mm error, transforming a manual inspection process into a repeatable data-driven workflow.',
+      'Led a 5-person industry-sponsored team in developing a computer vision system that measured factory part wear with less than 0.5 mm mean absolute error, transforming a manual inspection process into a repeatable data-driven workflow.',
       'Designed an OpenCV calibration pipeline that converted image coordinates into real-world measurements, enabling accurate wear analysis from standard camera hardware.',
       'Developed the primary operator-facing desktop application, integrating camera controls and inspection record retrieval into a single workflow for factory users.',
-      'Owned DevOps infrastructure, implementing CI pipelines and 29 automated tests to improve reliability and prevent regressions.',
+      "Owned DevOps infrastructure and implemented CI pipelines that ran the team's 29-test suite to improve reliability and prevent regressions.",
     ],
     tech: ['OpenCV', 'Python', 'React', 'Electron', 'AWS', 'CI/CD'],
     thumbnailSrc: partScan,

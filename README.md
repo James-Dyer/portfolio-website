@@ -1,6 +1,6 @@
 # James Dyer Portfolio
 
-Portfolio website for James Dyer, a new graduate software engineer focused on complex backend systems, cloud infrastructure, and agentic AI.
+Portfolio website for James Dyer, a new graduate software engineer specializing in backend, full-stack, and AI systems.
 
 Live site: [james-dyer.github.io/portfolio-website](https://james-dyer.github.io/portfolio-website/)
 
