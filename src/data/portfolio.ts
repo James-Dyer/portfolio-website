@@ -55,7 +55,7 @@ export const projects: Project[] = [
     title: 'Computer Vision Inspection System',
     subtitle: 'Industry-sponsored factory wear measurement',
     summary: 'A computer vision system that measures factory part wear from standard camera hardware, replacing a manual inspection process with a repeatable, data-driven workflow.',
-    outcome: 'Led a 5-person industry-sponsored team',
+    outcome: "Placed second at UC Merced's Innovate to Grow showcase",
     highlights: [
       'Led a 5-person industry-sponsored team in developing a computer vision system that measured factory part wear with less than 0.5 mm mean absolute error, transforming a manual inspection process into a repeatable data-driven workflow.',
       'Designed an OpenCV calibration pipeline that converted image coordinates into real-world measurements, enabling accurate wear analysis from standard camera hardware.',
@@ -75,7 +75,7 @@ export const projects: Project[] = [
     title: 'macroTracker',
     subtitle: 'AI nutrition tracking PWA',
     summary: 'An AI-powered nutrition tracker that transforms meal photos into structured macro data, eliminating manual entry.',
-    outcome: 'Live full-stack product serving real users',
+    outcome: 'Working full-stack product built end-to-end, solo',
     highlights: [
       'Architected and implemented the full-stack platform, including database design, API infrastructure, and client application for persistent nutrition tracking.',
       'Designed a secure image pipeline with client-side compression, reducing upload sizes by 80–98% and enabling efficient storage and fast retrieval.',
@@ -144,7 +144,7 @@ export const experiences: Experience[] = [
     highlights: [
       'Built a Python-based integration testing platform that provisions GCP infrastructure and executes end-to-end validation scenarios, enabling test workflows that were previously impossible due to service restart requirements.',
       'Developed a WebAssembly runtime and migrated three cybersecurity engines to Rust-compiled WASM, improving portability across deployment environments.',
-      'Resolved concurrency-related logging failures in production Go services, increasing observability and improving debugging of runtime issues.',
+      'Patched a concurrency bug in production Go logging that had been degrading observability, given a reported issue.',
     ],
     tech: ['Python', 'Go', 'Rust', 'WebAssembly', 'GCP', 'CLI tooling'],
     logoSrc: mimicLogo,
@@ -159,10 +159,12 @@ export const additionalExperiences: Experience[] = [
     role: 'Web Developer',
     duration: 'Dec 2024 – Jun 2025',
     location: 'Merced, CA',
-    summary: 'Built and deployed a React web application for the chapter, including a real-time fundraising leaderboard.',
+    summary: 'Built a multi-page production website for the chapter that supported a UC Merced campus fundraising record.',
     highlights: [
-      'Built and deployed a React web application featuring a real-time fundraising leaderboard used by 150+ participants during a chapter-wide philanthropy competition.',
-      'Worked with the executive committee to translate requirements into a maintainable, user-facing web product.',
+      'Designed and built a multi-page production React website from the ground up that supported a UC Merced campus fundraising record, covering recruitment, philanthropy, donations, and alumni pages.',
+      'Built a real-time fundraising leaderboard that held up under 150+ users during a week-long event.',
+      'Converted an Amazon wishlist on the donations page into unsolicited alumni donations.',
+      'Designed a spreadsheet-driven backend so non-technical exec board members could update leaderboard data themselves post-launch.',
     ],
     tech: ['React', 'JavaScript', 'GitHub Pages', 'Spreadsheet integration'],
     logoSrc: lambdaDeltaLogo,

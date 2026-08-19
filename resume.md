@@ -27,28 +27,29 @@ Tools: Git, CI/CD, Node.js, npm, Make, Poetry
 ```
 Capstone Team Lead Aug 2025 – Dec 2025
 ```
-- Led an industry-sponsored team of 5 delivering a production-ready system for automated factory part wear analysis.
-- Designed a desktop application with a physical camera rig using computer vision to measure component degradation.
-- Built a React-based UI with an Electron wrapper for real-time visualization and operator interaction.
-- Provisioned AWS infrastructure with CloudFormation and persisted inspection results to a centralized database.
+- Led a 5-person industry-sponsored team in developing a computer vision system that measured factory part wear with less than 0.5 mm mean absolute error, transforming a manual inspection process into a repeatable data-driven workflow. Placed second at UC Merced's Innovate to Grow showcase.
+- Designed an OpenCV calibration pipeline that converted image coordinates into real-world measurements, enabling accurate wear analysis from standard camera hardware.
+- Developed the primary operator-facing desktop application, integrating camera controls and inspection record retrieval into a single workflow for factory users.
+- Owned DevOps infrastructure, implementing CI pipelines that ran the team's 29-test suite to improve reliability and prevent regressions.
 
 ### Mimic Ransomware Defense Remote
 
 ```
 Software Engineering Intern May 2025 – Aug 2025
 ```
-- Fixed cross-goroutine logging issues in production Go services, improving log coverage in runtime environments.
-- Built a Python-based integration testing CLI that provisions GCP VMs, runs end-to-end scenarios, and auto-reports results.
-- Developed a WebAssembly execution engine and migrated cybersecurity engines from native code to Rust-compiled WASM.
-- Enabled portable and sandboxed execution of Rust-compiled WASM security engines using a custom Rust-based CLI.
+- Built a Python-based integration testing platform that provisions GCP infrastructure and executes end-to-end validation scenarios, enabling test workflows that were previously impossible due to service restart requirements.
+- Developed a WebAssembly runtime and migrated three cybersecurity engines to Rust-compiled WASM, improving portability across deployment environments.
+- Patched a concurrency bug in production Go logging that had been degrading observability, given a reported issue.
 
 ### Sigma Chi Fraternity, Lambda Delta Chapter Merced, CA
 
 ```
-Website Chairman Dec 2024 – Jun 2025
+Web Developer Dec 2024 – Jun 2025
 ```
-- Built and deployed a React-based static site on GitHub Pages serving 300+ monthly users.
-- Worked with executive committee to translate requirements into a maintainable, user-facing web product.
+- Designed and built a multi-page production React website from the ground up that supported a UC Merced campus fundraising record, covering recruitment, philanthropy, donations, and alumni pages.
+- Built a real-time fundraising leaderboard that held up under 150+ users during a week-long event.
+- Converted an Amazon wishlist on the donations page into unsolicited alumni donations.
+- Designed a spreadsheet-driven backend so non-technical exec board members could update leaderboard data themselves post-launch.
 
 ## PROJECTS
 
