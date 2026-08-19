@@ -46,7 +46,7 @@ Software Engineering Intern May 2025 – Aug 2025
 ```
 Web Developer Dec 2024 – Jun 2025
 ```
-- Designed and built a multi-page production React website from the ground up that supported a UC Merced campus fundraising record, covering recruitment, philanthropy, donations, and alumni pages.
+- Designed and built a multi-page production React website from the ground up that supported a UC Merced campus fundraising record, covering recruitment, philanthropy, donations, and membership pages.
 - Built a real-time fundraising leaderboard that held up under 150+ users during a week-long event.
 - Converted an Amazon wishlist on the donations page into unsolicited alumni donations.
 - Designed a spreadsheet-driven backend so non-technical exec board members could update leaderboard data themselves post-launch.

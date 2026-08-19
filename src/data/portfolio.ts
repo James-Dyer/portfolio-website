@@ -161,7 +161,7 @@ export const additionalExperiences: Experience[] = [
     location: 'Merced, CA',
     summary: 'Built a multi-page production website for the chapter that supported a UC Merced campus fundraising record.',
     highlights: [
-      'Designed and built a multi-page production React website from the ground up that supported a UC Merced campus fundraising record, covering recruitment, philanthropy, donations, and alumni pages.',
+      'Designed and built a multi-page production React website from the ground up that supported a UC Merced campus fundraising record, covering recruitment, philanthropy, donations, and membership pages.',
       'Built a real-time fundraising leaderboard that held up under 150+ users during a week-long event.',
       'Converted an Amazon wishlist on the donations page into unsolicited alumni donations.',
       'Designed a spreadsheet-driven backend so non-technical exec board members could update leaderboard data themselves post-launch.',
