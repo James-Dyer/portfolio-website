@@ -11,5 +11,5 @@ export default function AdditionalExperiencePage() {
     const timer = window.setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
     return () => window.clearTimeout(timer)
   }, [location.hash])
-  return <DetailPageLayout title="Additional Experience">{additionalExperiences.map((experience) => <ExperienceSection key={experience.id} experience={experience} />)}</DetailPageLayout>
+  return <DetailPageLayout title="Volunteer Experience">{additionalExperiences.map((experience) => <ExperienceSection key={experience.id} experience={experience} />)}</DetailPageLayout>
 }
