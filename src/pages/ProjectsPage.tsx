@@ -13,7 +13,7 @@ function ProjectMedia({ project, onOpen }: { project: Project; onOpen: (screensh
   if (!primary) return null
   return (
     <div>
-      <button type="button" onClick={() => onOpen(primary)} className="block w-full cursor-zoom-in overflow-hidden rounded-lg border border-white/[0.08] bg-card text-left transition-opacity hover:opacity-90" aria-label={`Open fullscreen image: ${primary.caption}`}><img src={primary.src} alt={primary.alt} className="aspect-[16/10] w-full object-cover" /></button>
+      <button type="button" onClick={() => onOpen(primary)} className="block w-full cursor-zoom-in overflow-hidden rounded-lg border border-white/[0.08] bg-card text-left transition-opacity hover:opacity-90" aria-label={`Open fullscreen image: ${primary.caption}`}><img src={primary.src} alt={primary.alt} className="aspect-[16/10] w-full object-cover" style={{ objectPosition: primary.objectPosition }} /></button>
       <div className="mt-3 grid grid-cols-3 gap-3">{secondary.map((screenshot) => <button key={screenshot.src} type="button" onClick={() => onOpen(screenshot)} className="cursor-zoom-in overflow-hidden rounded-md border border-white/[0.08] bg-card transition-opacity hover:opacity-90" aria-label={`Open fullscreen image: ${screenshot.caption}`}><img src={screenshot.src} alt={screenshot.alt} className="aspect-[16/10] w-full object-cover" /></button>)}</div>
     </div>
   )
@@ -26,7 +26,7 @@ function ProjectSection({ project, onOpen }: { project: Project; onOpen: (screen
         <div>
           <h2 className="font-display text-4xl font-medium tracking-tight text-cream sm:text-5xl">{project.title}</h2>
           <p className="mt-4 font-body text-base leading-relaxed text-stone">{project.summary}</p>
-          <div className="mt-5 border-y border-white/[0.08] py-3"><span className="font-sans text-[10px] uppercase tracking-[0.14em] text-stone">Signal outcome</span><strong className="mt-1 block font-sans text-sm font-medium text-gold">{project.outcome}</strong></div>
+          <div className="mt-5 border-y border-white/[0.08] py-3"><span className="font-sans text-[10px] uppercase tracking-[0.14em] text-stone">Outcome</span><strong className="mt-1 block font-sans text-sm font-medium text-gold">{project.outcome}</strong></div>
           <ul className="mt-7 space-y-3">{project.highlights.map((item) => <li key={item} className="flex gap-3 font-body text-sm leading-relaxed text-cream/75"><span className="mt-2 h-1 w-1 flex-none rounded-full bg-gold" /><span>{item}</span></li>)}</ul>
           <div className="mt-7 flex flex-wrap gap-x-3 gap-y-2">{project.tech.map((item) => <span key={item} className="font-sans text-xs text-stone">{item}</span>)}</div>
           <div className="mt-7 flex flex-wrap gap-4">{project.links.github && <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="font-sans text-sm font-medium text-gold transition-colors hover:text-cream">GitHub ↗</a>}{project.links.live && <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="font-sans text-sm font-medium text-gold transition-colors hover:text-cream">{project.links.liveLabel ?? 'Live site'} ↗</a>}</div>

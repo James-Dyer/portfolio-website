@@ -12,7 +12,12 @@ export default function ExperienceCard({ experience, index, basePath = '/experie
 
   return (
     <div ref={card} className="group relative block rounded-xl overflow-hidden transition-all duration-500 animate-slide-up" style={{ animationDelay: `${700 + index * 100}ms`, perspective: 1000, transformStyle: 'preserve-3d' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <Link to={`${basePath}#${experience.id}`} aria-label={`View details for ${experience.company}`} className="absolute inset-0 z-10" />
+      <Link
+        to={`${basePath}#${experience.id}`}
+        aria-label={`View details for ${experience.company}`}
+        className="z-10"
+        style={{ position: 'absolute', inset: 0 }}
+      />
       <div className="absolute inset-0 rounded-xl transition-all duration-500" style={{ background: hovered ? 'linear-gradient(135deg,rgba(201,168,108,.08),rgba(22,22,22,.95) 55%,rgba(22,22,22,.98))' : 'transparent', border: hovered ? '1px solid rgba(201,168,108,.3)' : '1px solid transparent', boxShadow: hovered ? '0 20px 40px -15px rgba(0,0,0,.5)' : 'none' }} />
       <div ref={glow} className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-500" style={{ opacity: hovered ? 1 : 0 }} />
       <div className="pointer-events-none relative flex items-stretch p-4 lg:p-5 gap-5">

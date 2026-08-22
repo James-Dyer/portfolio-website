@@ -14,6 +14,7 @@ export interface Screenshot {
   src: string
   alt: string
   caption: string
+  objectPosition?: string
 }
 
 export interface Project {
@@ -55,7 +56,7 @@ export const projects: Project[] = [
     title: 'Computer Vision Inspection System',
     subtitle: 'Industry-sponsored factory wear measurement',
     summary: 'A computer vision system that measures factory part wear from standard camera hardware, replacing a manual inspection process with a repeatable, data-driven workflow.',
-    outcome: 'Led a 5-person industry-sponsored team',
+    outcome: "Placed second at UC Merced's Innovate to Grow showcase",
     highlights: [
       'Led a 5-person industry-sponsored team in developing a computer vision system that measured factory part wear with less than 0.5 mm mean absolute error, transforming a manual inspection process into a repeatable data-driven workflow.',
       'Designed an OpenCV calibration pipeline that converted image coordinates into real-world measurements, enabling accurate wear analysis from standard camera hardware.',
@@ -75,7 +76,7 @@ export const projects: Project[] = [
     title: 'macroTracker',
     subtitle: 'AI nutrition tracking PWA',
     summary: 'An AI-powered nutrition tracker that transforms meal photos into structured macro data, eliminating manual entry.',
-    outcome: 'Live full-stack product serving real users',
+    outcome: 'Multimodal AI product built with React and Supabase',
     highlights: [
       'Architected and implemented the full-stack platform, including database design, API infrastructure, and client application for persistent nutrition tracking.',
       'Designed a secure image pipeline with client-side compression, reducing upload sizes by 80–98% and enabling efficient storage and fast retrieval.',
@@ -104,13 +105,13 @@ export const projects: Project[] = [
     ],
     tech: ['React', 'Flask', 'PostgreSQL', 'Pyodide', 'Monaco Editor', 'OpenAI API'],
     thumbnailSrc: tutorThumbnail,
-    heroMedia: tutorDashboard,
+    heroMedia: tutorEditor,
     links: { github: 'https://github.com/James-Dyer/cse108-final' },
     media: 'screenshots',
     screenshots: [
+      { src: tutorEditor, alt: 'Code editor and hints', caption: 'Editor and hints', objectPosition: 'left center' },
       { src: tutorDashboard, alt: 'Assignment dashboard', caption: 'Assignment dashboard' },
       { src: tutorPlanning, alt: 'Planning workflow', caption: 'Planning workflow' },
-      { src: tutorEditor, alt: 'Code editor and hints', caption: 'Editor and hints' },
       { src: tutorIntegrated, alt: 'Integrated tutor view', caption: 'Integrated tutor view' },
     ],
   },

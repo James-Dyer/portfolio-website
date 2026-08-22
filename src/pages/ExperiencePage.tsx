@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import DetailPageLayout from '../components/DetailPageLayout'
 import ExperienceSection from '../components/ExperienceSection'
-import { experiences } from '../data/portfolio'
+import { additionalExperiences, experiences } from '../data/portfolio'
 
 export default function ExperiencePage() {
   const location = useLocation()
@@ -11,5 +11,5 @@ export default function ExperiencePage() {
     const timer = window.setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
     return () => window.clearTimeout(timer)
   }, [location.hash])
-  return <DetailPageLayout title="Experience">{experiences.map((experience) => <ExperienceSection key={experience.id} experience={experience} />)}</DetailPageLayout>
+  return <DetailPageLayout title="Experience">{[...experiences, ...additionalExperiences].map((experience) => <ExperienceSection key={experience.id} experience={experience} />)}</DetailPageLayout>
 }
